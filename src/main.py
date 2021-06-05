@@ -1,8 +1,5 @@
-print('1')
 from model.parser import *
-print('2')
 from model.game import *
-print('3')
 
 king = King(Colour.BLACK)
 print(king)

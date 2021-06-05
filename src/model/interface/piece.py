@@ -29,5 +29,11 @@ class Piece(metaclass=ABCMeta):
     def colour(self) -> Colour:
         return self._colour
     
+    def __eq__(self, other):
+        if self.name == other.name and self.colour == other.colour:
+            return True
+        else:
+            return False
+
     def __str__(self) -> str:
         return f'[{self.abbreviation}] {self.name}: {self.value}'
