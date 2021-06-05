@@ -1,12 +1,12 @@
-from model import Colour
-from pieces import King, i_piece
+from model import *
 
-
-
-print(Colour.WHITE)
 king = King(Colour.BLACK)
+print(king)
 
-print(king.name)
-print(king.abbreviation)
-print(king.value)
-print(king.colour)
+pawn = Pawn(Colour.BLACK)
+print(pawn)
+
+board = Board()
+print(board)
+board.board[0][0] = pawn
+print(board)

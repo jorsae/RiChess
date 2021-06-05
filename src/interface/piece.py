@@ -28,3 +28,6 @@ class Piece(metaclass=ABCMeta):
     @property
     def colour(self) -> Colour:
         return self._colour
+    
+    def __str__(self) -> str:
+        return f'[{self.abbreviation}] {self.name}: {self.value}'

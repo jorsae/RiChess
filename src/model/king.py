@@ -1,6 +1,4 @@
-from abc import ABCMeta, abstractmethod
-from pieces import Piece
-from model import Colour
+from interface import Piece
 
 class King(Piece):
     @property
