@@ -1,13 +1,13 @@
-from interface import Piece
+from model.interface import Piece
 
-class Knight(Piece):
+class Bishop(Piece):
     @property
     def name(self):
-        return "Knight"
+        return "Bishop"
     
     @property
     def abbreviation(self):
-        return "N"
+        return "B"
     
     @property
     def value(self):

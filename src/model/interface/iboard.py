@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from model import Colour
+from model.game import Colour
 
 from typing import List, Optional
 
@@ -21,6 +21,9 @@ class IBoard(metaclass=ABCMeta):
                 if piece == None:
                     line += ' 0 |'
                 else:
-                    line += f' {piece.abbreviation} |'
+                    if piece.colour == Colour.BLACK:
+                        line += f' {piece.abbreviation.lower()} |'
+                    else:
+                        line += f' {piece.abbreviation.upper()} |'
             output += f'{line[:-1]}\n'
         return output

@@ -1,4 +1,4 @@
-from interface import Piece
+from model.interface import Piece
 
 class Rook(Piece):
     @property

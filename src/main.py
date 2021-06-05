@@ -1,22 +1,15 @@
-from model import *
+from model.game import *
 
 king = King(Colour.BLACK)
 print(king)
 
 pawn = Pawn(Colour.BLACK)
-print(pawn)
+pawn2 = Pawn(Colour.WHITE)
 
 board = Board()
 print(board)
 board.board[0][0] = pawn
+board.board[0][1] = pawn2
 print(board)
-print(board.board)
-print()
-print(""" 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 
- 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 
- 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 
- 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 
- 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 
- 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
- 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
- 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 """)
+
+print(board.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"))

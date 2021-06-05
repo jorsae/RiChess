@@ -1,17 +1,17 @@
-from interface import Piece
+from model.interface import Piece
 
-class Pawn(Piece):
+class King(Piece):
     @property
     def name(self):
-        return "Pawn"
+        return "King"
     
     @property
     def abbreviation(self):
-        return "p"
+        return "K"
     
     @property
     def value(self):
-        return 1
+        return 100
     
     @property
     def movement(self):
