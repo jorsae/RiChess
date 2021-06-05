@@ -1,4 +1,4 @@
-from model.game.colour import Colour
+from model.game.utils.colour import Colour
 from model.game.board import Board
 from model.game.king import King
 from model.game.queen import Queen

@@ -1,4 +1,8 @@
+print('1')
+from model.parser import *
+print('2')
 from model.game import *
+print('3')
 
 king = King(Colour.BLACK)
 print(king)
@@ -12,4 +16,5 @@ board.board[0][0] = pawn
 board.board[0][1] = pawn2
 print(board)
 
-print(board.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"))
+fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+print(fp.parse())
