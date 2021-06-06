@@ -4,6 +4,9 @@ class Board():
     def __init__(self, ranks: int = 8, files: int = 8, ):
         self.ranks = ranks
         self.files = files
+        self.turn = Colour.WHITE
+        self.halfmove = 0
+        self.fullmove = 0
         self.board = [[None for i in range(self.ranks)] for j in range(self.files)]
 
     def get_piece(self, rank, file):

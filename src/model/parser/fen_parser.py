@@ -6,12 +6,33 @@ re_number = re.compile('\d')
 class FenParser:
     def __init__(self, fen):
         self.fen = fen
+        self.player_turn = None
+        self.last_move = None # None if pawn was not moved last turn. Stored for en passant
+        self.halfmove = 0 # Moves since last pawn move/capture, used for 50-move rule
+        self.fullmove = 0
     
     def parse(self):
         ranks = self.fen.split(" ")[0].split("/")
         bl = self.parse_ranks(ranks)
+        
+        splits = self.fen.split(" ")
+        print(splits)
+
+        self.player_turn = self.parse_player_turn(splits[1])
+        print(self.player_turn)
+
+        self.parse_castling(splits[2])
+
+        self.last_move = self.parse_en_passant(splits[3])
+
+        self.halfmove = self.parse_integer(splits[4])
+        
+        self.fullmove = self.parse_integer(splits[5])
+
+        print(self)
+        
         return bl
-    
+
     def parse_ranks(self, ranks):
         board_list = []
         rank_number = 0
@@ -48,3 +69,25 @@ class FenParser:
             return Colour.WHITE
         else:
             return Colour.BLACK
+    
+    def parse_player_turn(self, player_turn):
+        if player_turn == 'b':
+            return Colour.BLACK
+        else:
+            return Colour.WHITE
+    
+    def parse_castling(self, castling):
+        print(castling)
+    
+    def parse_en_passant(self, en_passant):
+        self.last_move = en_passant
+    
+    def parse_integer(self, text):
+        try:
+            return int(text)
+        except Exception as e:
+            print(e)
+            return 0
+    
+    def __str__(self):
+        return f'{self.player_turn}: {self.last_move}, {self.halfmove}, {self.fullmove}'
