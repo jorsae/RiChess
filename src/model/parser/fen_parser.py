@@ -67,7 +67,7 @@ class FenParser:
             return Colour.WHITE
     
     def parse_castling(self, castling):
-        # TODO: Implement castling rules from fen
+        # TODO: Parse castling rules from fen
         pass
     
     def parse_en_passant(self, en_passant):

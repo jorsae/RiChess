@@ -4,6 +4,7 @@ class Board():
     def __init__(self, ranks: int = 8, files: int = 8, ):
         self.ranks = ranks
         self.files = files
+        self.move_history = []
         self.turn = Colour.WHITE
         self.halfmove = 0
         self.fullmove = 0
@@ -24,8 +25,9 @@ class Board():
         self.player_turn = fen_parser.player_turn
         self.halfmove = fen_parser.halfmove
         self.fullmove = fen_parser.fullmove
-        # TODO: Put fen.last_move into move_history
-        # TODO: Implement castling rules from fen
+        if fen_parser.last_move is not None:
+            self.move_history.append(fen_parser.last_move)
+        # TODO: Parse castling rules from fen
 
     def get_piece_list(self):
         piece_list = []

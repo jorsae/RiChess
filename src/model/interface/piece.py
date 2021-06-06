@@ -21,10 +21,14 @@ class Piece(metaclass=ABCMeta):
         return -1
     
     @property
+    def has_moved(self) -> bool:
+        return False
+
+    @property
     @abstractmethod
     def movement(self) -> 'Movement':
         pass
-    
+
     @property
     def colour(self) -> Colour:
         return self._colour

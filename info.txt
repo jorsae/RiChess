@@ -1,0 +1,3 @@
+3-fold repetition:
+    Get FEN, remove halfmove/fullmove, then hash it and store the value
+    if value exists, increment by 1
