@@ -25,18 +25,18 @@ class Board():
         
         # Default movement
         for movement in piece.movement():
-            self.get_moves_in_direction(movement, rank, file)
+            available_moves.update(self.get_moves_in_direction(movement, rank, file))
         
         # Special movement(pawn moves, castling)
         if piece.name == 'Pawn':
-            pawn_moves = move_logic.pawn_moves(self, piece, rank, file)
-            print(pawn_moves)
+            available_moves.update(move_logic.pawn_moves(self, piece, rank, file))
         elif piece.name == 'King':
             pass # TODO: Implement castling in move_logic.py
         
-        return []
+        return list(available_moves)
     
     def get_moves_in_direction(self, movement, rank_start, file_start):
+        available_moves = set()
         def out_of_bounds(rank, file):
             if rank > (self.ranks - 1) or rank < 0:
                 return True
@@ -51,9 +51,9 @@ class Board():
             if out_of_bounds(rank, file):
                 break
             else:
-                print(f'[{index}]: {rank}, {file}')
-
-
+                available_moves.add((rank, file))
+        return available_moves
+    
     def place_piece(self, piece, rank, file):
         self.board[rank][file] = piece
 

@@ -43,4 +43,4 @@ def pawn_moves(board, pawn, rank, file):
     
     # TODO: implement promotion
     
-    return list(available_moves)
+    return available_moves
