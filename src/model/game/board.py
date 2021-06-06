@@ -1,8 +1,10 @@
-from model.piece import Colour, BoardPiece
 from typing import Sequence
 
+from model.piece import Colour, BoardPiece
+import model.game.move_logic as move_logic
+
 class Board():
-    def __init__(self, ranks: int = 8, files: int = 8, ):
+    def __init__(self, ranks: int = 8, files: int = 8):
         self.ranks = ranks
         self.files = files
         self.move_history = []
@@ -21,9 +23,17 @@ class Board():
         
         available_moves = set()
         
+        # Default movement
         for movement in piece.movement():
-            # print(movement)
             self.get_moves_in_direction(movement, rank, file)
+        
+        # Special movement(pawn moves, castling)
+        if piece.name == 'Pawn':
+            pawn_moves = move_logic.pawn_moves(self, piece, rank, file)
+            print(pawn_moves)
+        elif piece.name == 'King':
+            pass # TODO: Implement castling in move_logic.py
+        
         return []
     
     def get_moves_in_direction(self, movement, rank_start, file_start):

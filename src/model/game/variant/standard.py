@@ -70,4 +70,4 @@ class Standard:
     def pawn_movement(self):
         # TODO: How to code it so that move depends on colour
         # TODO: Make 100 a non-magical number
-        return [MoveDescription((1, 0), 1)]
+        return []
