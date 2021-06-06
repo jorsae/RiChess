@@ -1,5 +1,5 @@
 import re
-from model.game import *
+from model.piece import *
 
 re_number = re.compile(r'\d')
 

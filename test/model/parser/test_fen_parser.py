@@ -2,7 +2,7 @@ import pytest
 import sys
 sys.path.append('src')
 from model.parser import *
-from model.game import *
+from model.piece import *
 
 """
     self.fen = fen

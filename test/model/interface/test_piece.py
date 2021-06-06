@@ -1,7 +1,7 @@
 import pytest
 import sys
 sys.path.append('src')
-from model.game import *
+from model.piece import *
 
 def test_eq():
     pawn = Pawn(Colour.BLACK)

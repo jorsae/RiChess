@@ -1,4 +1,4 @@
-from model.game import Colour, BoardPiece
+from model.piece import Colour, BoardPiece
 
 class Board():
     def __init__(self, ranks: int = 8, files: int = 8, ):

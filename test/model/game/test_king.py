@@ -1,7 +1,7 @@
 import pytest
 import sys
 sys.path.append('src')
-from model.game import *
+from model.piece import *
 
 king = King(Colour.BLACK)
 

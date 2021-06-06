@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from model.game import Colour
+from model.piece import Colour
 
 class Piece(metaclass=ABCMeta):
     def __init__(self, colour: Colour):
