@@ -9,9 +9,7 @@ pawn2 = Pawn(Colour.WHITE)
 
 board = Board()
 print(board)
-board.board[0][0] = pawn
-board.board[0][1] = pawn2
-print(board)
 
-fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
-print(fp.parse())
+fp = FenParser("8/ppp1k3/8/8/8/8/PP6/RN1K3R w KQ - 0 1")
+board.place_pieces(fp.parse())
+print(board)

@@ -9,3 +9,6 @@ class BoardPiece:
             return True
         else:
             return False
+    
+    def __str__(self):
+        return f'{self.piece}: {self.rank}, {self.file}'
