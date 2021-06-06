@@ -32,6 +32,7 @@ class Board():
                 return True
             if file > (self.files - 1) or file < 0:
                 return True
+            return False
         
         # rank, file. is current position
         for index in range(1, movement.range,):
