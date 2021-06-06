@@ -4,6 +4,7 @@ from model.game import Colour
 class Piece(metaclass=ABCMeta):
     def __init__(self, colour: Colour):
         self._colour = colour
+        self._has_moved = False
     
     @property
     @abstractmethod
@@ -22,7 +23,11 @@ class Piece(metaclass=ABCMeta):
     
     @property
     def has_moved(self) -> bool:
-        return False
+        return self._has_moved
+    
+    @has_moved.setter
+    def has_moved(self, value):
+        self._has_moved = value
 
     @property
     @abstractmethod

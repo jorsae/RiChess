@@ -27,7 +27,12 @@ class Board():
         self.fullmove = fen_parser.fullmove
         if fen_parser.last_move is not None:
             self.move_history.append(fen_parser.last_move)
-        # TODO: Parse castling rules from fen
+        
+        # BEWARE: This can technically set non rook/king pieces to has_moved = True, but it should not matter.
+        for rank, file in fen_parser.has_moved:
+            piece = self.get_piece(rank, file)
+            if piece is not None:
+                piece.has_moved = True
 
     def get_piece_list(self):
         piece_list = []

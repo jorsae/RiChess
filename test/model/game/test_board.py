@@ -58,14 +58,14 @@ def test_get_piece_list(piece_list):
     for index in range(len(bp_list)):
         assert(bp_list[index]) == piece_list[index]
 
-@pytest.mark.parametrize("fen, expected_player_turn, expected_halfmove, expected_fullmove, expected_move_history", [
-    ("8/ppp1k3/8/8/8/8/PP6/RN1K3R w KQ e3 0 1", Colour.WHITE, 0, 1, ["e3"]),
-    ("r1bqkbnr/p1p1pppp/2np4/8/2BP4/4PN2/PP3PPP/RNBQK2R b KQkq - 0 5", Colour.BLACK, 0, 5, []),
-    ("3b4/4kp2/7p/5p2/2r5/1P3N1P/P2R2PK/8 b - f2 60 111", Colour.BLACK, 60, 111, ["f2"]),
-    ("r2qkbnr/p2bppp1/2p4p/4p3/2B5/2N1P3/PP1BQPPP/2R2RK1 b - - 1 12", Colour.BLACK, 1, 12, []),
-    ("1r1qkb1r/p3ppp1/2p1bn1p/8/2B1Pp2/2N1B2P/PP2Q1P1/2R2RK1 w - g3 19 25", Colour.WHITE, 19, 25, ["g3"]),
+@pytest.mark.parametrize("fen, expected_player_turn, expected_halfmove, expected_fullmove, expected_move_history, expected_has_moved", [
+    ("8/ppp1k3/8/8/8/8/PP6/RN1K3R w KQ e3 0 1", Colour.WHITE, 0, 1, ["e3"], [(0, 0), (4, 0), (7, 0)]),
+    ("r1bqkbnr/p1p1pppp/2np4/8/2BP4/4PN2/PP3PPP/RNBQK2R b KQkq - 0 5", Colour.BLACK, 0, 5, [], []),
+    ("3b4/4kp2/7p/5p2/2r5/1P3N1P/P2R2PK/8 b - f2 60 111", Colour.BLACK, 60, 111, ["f2"], [(0, 0), (4, 0), (7, 0), (0, 7), (4, 7), (7, 7)]),
+    ("r2qkbnr/p2bppp1/2p4p/4p3/2B5/2N1P3/PP1BQPPP/2R2RK1 b k - 1 12", Colour.BLACK, 1, 12, [], [(0, 0), (0, 7), (4, 7), (7, 7)]),
+    ("1r1qkb1r/p3ppp1/2p1bn1p/8/2B1Pp2/2N1B2P/PP2Q1P1/2R2RK1 w Q g3 19 25", Colour.WHITE, 19, 25, ["g3"], [(0, 0), (4, 0), (7, 0), (7, 7)]),
 ])
-def test_load_fen(fen, expected_player_turn, expected_halfmove, expected_fullmove, expected_move_history):
+def test_load_fen(fen, expected_player_turn, expected_halfmove, expected_fullmove, expected_move_history, expected_has_moved):
     fp = FenParser(fen)
     fp.parse()
     
@@ -76,3 +76,7 @@ def test_load_fen(fen, expected_player_turn, expected_halfmove, expected_fullmov
     assert(board.halfmove) == expected_halfmove
     assert(board.fullmove) == expected_fullmove
     assert(board.move_history) == expected_move_history
+    for rank, file in expected_has_moved:
+        piece = board.get_piece(rank, file)
+        if piece is not None:
+            assert(piece.has_moved)
