@@ -13,5 +13,4 @@ print(chess_game.board)
 
 bishop = chess_game.board.get_piece(2, 7)
 print(bishop.name)
-for p in chess_game.board.get_piece_list():
-    print(p)
+chess_game.board.get_available_moves(2, 7)

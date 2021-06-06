@@ -1,4 +1,5 @@
 from model.piece import Colour, BoardPiece
+from typing import Sequence
 
 class Board():
     def __init__(self, ranks: int = 8, files: int = 8, ):
@@ -12,6 +13,35 @@ class Board():
 
     def get_piece(self, rank, file):
         return self.board[rank][file]
+    
+    def get_available_moves(self, rank, file):
+        piece = self.get_piece(rank, file)
+        if piece is None:
+            return []
+        
+        available_moves = set()
+        
+        for movement in piece.movement():
+            # print(movement)
+            self.get_moves_in_direction(movement, rank, file)
+        return []
+    
+    def get_moves_in_direction(self, movement, rank_start, file_start):
+        def out_of_bounds(rank, file):
+            if rank > (self.ranks - 1) or rank < 0:
+                return True
+            if file > (self.files - 1) or file < 0:
+                return True
+        
+        # rank, file. is current position
+        for index in range(1, movement.range,):
+            rank = rank_start + (movement.vector[0] * index)
+            file = file_start + (movement.vector[1] * index)
+            if out_of_bounds(rank, file):
+                break
+            else:
+                print(f'[{index}]: {rank}, {file}')
+
 
     def place_piece(self, piece, rank, file):
         self.board[rank][file] = piece
