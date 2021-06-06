@@ -1,5 +1,6 @@
 from model.parser import *
 from model.piece import *
+from model.game import *
 
 
 board = Board()

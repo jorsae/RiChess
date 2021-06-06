@@ -1,7 +1,6 @@
 from model.piece.utils.colour import Colour
 from model.piece.utils.board_piece import BoardPiece
 
-from model.piece.board import Board
 from model.piece.king import King
 from model.piece.queen import Queen
 from model.piece.rook import Rook

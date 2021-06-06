@@ -3,6 +3,7 @@ import sys
 sys.path.append('src')
 from model.piece import *
 from model.parser import *
+from model.game import *
 
 board = Board()
 
