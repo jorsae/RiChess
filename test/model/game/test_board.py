@@ -20,6 +20,7 @@ def test_board_str():
  0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
 """
 
+
 @pytest.mark.parametrize("board_piece", [
     (BoardPiece(King(Colour.WHITE), 6, 6)),
     (BoardPiece(King(Colour.BLACK), 1, 0)),

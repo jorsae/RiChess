@@ -1,7 +1,7 @@
 import re
 from model.game import *
 
-re_number = re.compile('\d')
+re_number = re.compile(r'\d')
 
 class FenParser:
     def __init__(self, fen):
@@ -16,10 +16,8 @@ class FenParser:
         bl = self.parse_ranks(ranks)
         
         splits = self.fen.split(" ")
-        print(splits)
 
         self.player_turn = self.parse_player_turn(splits[1])
-        print(self.player_turn)
 
         self.parse_castling(splits[2])
 
@@ -28,8 +26,6 @@ class FenParser:
         self.halfmove = self.parse_integer(splits[4])
         
         self.fullmove = self.parse_integer(splits[5])
-
-        print(self)
         
         return bl
 
@@ -80,7 +76,10 @@ class FenParser:
         print(castling)
     
     def parse_en_passant(self, en_passant):
-        self.last_move = en_passant
+        if en_passant == '-':
+            return None
+        else:
+            return en_passant
     
     def parse_integer(self, text):
         try:
