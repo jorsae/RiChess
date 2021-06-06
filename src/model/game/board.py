@@ -37,6 +37,22 @@ class Board():
     
     def get_moves_in_direction(self, movement, rank_start, file_start):
         available_moves = set()
+        this = self.get_piece(rank_start, file_start)
+
+        def can_move_to(rank, file):
+            if rank > (self.ranks - 1) or rank < 0:
+                return False, False
+            if file > (self.files - 1) or file < 0:
+                return False, False
+            piece = self.get_piece(rank, file)
+            if piece is None:
+                return True, True
+            else:
+                if piece.colour == this.colour:
+                    return False, False
+                else:
+                    return True, False
+
         def out_of_bounds(rank, file):
             if rank > (self.ranks - 1) or rank < 0:
                 return True
@@ -48,10 +64,11 @@ class Board():
         for index in range(1, movement.range,):
             rank = rank_start + (movement.vector[0] * index)
             file = file_start + (movement.vector[1] * index)
-            if out_of_bounds(rank, file):
-                break
-            else:
+            can_move, cont = can_move_to(rank, file)
+            if can_move:
                 available_moves.add((rank, file))
+            if cont is False:
+                break
         return available_moves
     
     def place_piece(self, piece, rank, file):
