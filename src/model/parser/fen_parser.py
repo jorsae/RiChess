@@ -27,17 +27,17 @@ class FenParser:
 
     def parse_ranks(self, ranks):
         pieces = []
-        rank_number = 0
+        file_number = 0
         for index in range(len(ranks)):
-            file_number = 0
+            rank_number = 0
             for char in ranks[index]:
                 if re_number.match(char):
-                    file_number += int(char)
+                    rank_number += int(char)
                 else:
                     piece = self.get_piece(char)
                     pieces.append(BoardPiece(piece, rank_number, file_number))
-                    file_number += 1
-            rank_number += 1
+                    rank_number += 1
+            file_number += 1
         return pieces
     
     def get_piece(self, char):

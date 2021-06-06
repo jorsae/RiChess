@@ -11,7 +11,7 @@ chess_game.board.load_from_fen(fp)
 
 print(chess_game.board)
 
-bishop = chess_game.board.get_piece(7, 2)
+bishop = chess_game.board.get_piece(2, 7)
 print(bishop.name)
-# for p in chess_game.board.get_piece_list():
-    # print(p)
+for p in chess_game.board.get_piece_list():
+    print(p)

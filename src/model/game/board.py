@@ -36,8 +36,8 @@ class Board():
 
     def get_piece_list(self):
         piece_list = []
-        for rank in range(self.ranks):
-            for file in range(self.files):
+        for file in range(self.files):
+            for rank in range(self.ranks):
                 piece = self.get_piece(rank, file)
                 if piece is not None:
                     piece_list.append(BoardPiece(piece, rank, file))
@@ -45,9 +45,9 @@ class Board():
 
     def __str__(self):
         output = ''
-        for rank in range(self.ranks):
+        for file in range(self.files):
             line = ''
-            for file in range(self.files):
+            for rank in range(self.ranks):
                 piece = self.get_piece(rank, file)
                 if piece is None:
                     line += ' 0 |'
