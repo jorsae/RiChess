@@ -13,6 +13,6 @@ class Bishop(Piece):
     def value(self):
         return 3
     
-    @property
-    def movement(self):
-        pass
+    @staticmethod
+    def movement():
+        return Movement[(0, 1), (1, 1)]

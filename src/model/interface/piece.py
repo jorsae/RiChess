@@ -29,11 +29,11 @@ class Piece(metaclass=ABCMeta):
     def has_moved(self, value):
         self._has_moved = value
 
-    @property
+    @staticmethod
     @abstractmethod
     def movement(self) -> 'Movement':
-        pass
-
+        return None
+    
     @property
     def colour(self) -> Colour:
         return self._colour
