@@ -1,7 +1,7 @@
 import pytest
 import sys
 sys.path.append('src')
-from model.parser import *
+from library.parser import *
 from model.piece import *
 from model.game import *
 

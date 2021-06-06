@@ -1,4 +1,4 @@
-from model.parser import *
+from library.parser import *
 from model.piece import *
 from model.game import *
 

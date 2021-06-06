@@ -1,0 +1,1 @@
+from library.parser.fen_parser import FenParser
