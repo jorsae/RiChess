@@ -71,3 +71,15 @@ def test_last_move(fen, expected):
     fp = FenParser(fen)
     fp.parse()
     assert(fp.last_move) == expected
+
+@pytest.mark.parametrize("fen, expected", [
+    ("rnbqkbnr/p1p1pp1p/3p4/1p6/1PP2PpP/3PP3/P5P1/RNBQKBNR b - f3 0 6", [(0, 0), (4, 0), (7, 0), (0, 7), (4, 7), (7, 7)]),
+    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", []),
+    ("rnbqkbnr/pp2pppp/2p5/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQ d6 0 3", [(0, 0), (4, 0), (7, 0)]),
+    ("7k/p1p2p1p/3p4/1p2pP2/1PP4P/3PP1p1/P5P1/RNBQKBNR w qk e6 0 8", [(0, 7), (4, 7), (7, 7)]),
+    ("7k/p1p2p1p/3p4/1p2pP2/1PP4P/3PP1p1/P5P1/RNBQKBNR w Kq e6 0 8", [(7, 0), (0, 7)]),
+])
+def test_has_moved(fen, expected):
+    fp = FenParser(fen)
+    fp.parse()
+    assert(fp.has_moved) == expected

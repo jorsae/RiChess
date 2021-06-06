@@ -4,7 +4,7 @@ from model.game import *
 
 board = Board()
 
-fp = FenParser("r4nk1/pp2r1p1/2p1P2p/3p1P1N/8/8/PPPK4/6RR w - e3 0 1")
+fp = FenParser("7k/p1p2p1p/3p4/1p2pP2/1PP4P/3PP1p1/P5P1/RNBQKBNR w K    q e6 0 8")
 fp.parse()
 board.load_from_fen(fp)
-print(board.move_history)
+print(fp.has_moved)

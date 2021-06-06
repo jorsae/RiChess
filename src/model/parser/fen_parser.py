@@ -7,6 +7,7 @@ class FenParser:
     def __init__(self, fen):
         self.fen = fen
         self.pieces = []
+        self.has_moved = []
         self.player_turn = None
         self.last_move = None # None if pawn was not moved last turn. Stored for en passant
         self.halfmove = 0 # Moves since last pawn move/capture, used for 50-move rule
@@ -19,7 +20,7 @@ class FenParser:
         splits = self.fen.split(" ")
 
         self.player_turn = self.parse_player_turn(splits[1])
-        self.parse_castling(splits[2])
+        self.has_moved = self.parse_castling(splits[2])
         self.last_move = self.parse_en_passant(splits[3])
         self.halfmove = self.parse_integer(splits[4])
         self.fullmove = self.parse_integer(splits[5])
@@ -67,8 +68,34 @@ class FenParser:
             return Colour.WHITE
     
     def parse_castling(self, castling):
-        # TODO: Parse castling rules from fen
-        pass
+        def remove_has_moved(has_moved, value):
+            try:
+                has_moved.remove(value)
+            except ValueError:
+                pass
+
+        has_moved = [(0, 0), (4, 0), (7, 0), (0, 7), (4, 7), (7, 7)]
+        if castling == '-':
+            return has_moved
+        
+        for char in castling:
+            char_lower = char.lower()
+            if char_lower == 'k':
+                if char.isupper():
+                    remove_has_moved(has_moved, (4, 7))
+                    remove_has_moved(has_moved, (7, 7))
+                else:
+                    remove_has_moved(has_moved, (4, 0))
+                    remove_has_moved(has_moved, (7, 0))
+            elif char_lower == 'q':
+                if char.isupper():
+                    remove_has_moved(has_moved, (0, 7))
+                    remove_has_moved(has_moved, (4, 7))
+                else:
+                    remove_has_moved(has_moved, (0, 0))
+                    remove_has_moved(has_moved, (4, 0))
+        
+        return has_moved
     
     def parse_en_passant(self, en_passant):
         if en_passant == '-':
