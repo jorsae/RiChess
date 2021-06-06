@@ -21,7 +21,7 @@ def test_board_position(fen, expected):
     fp = FenParser(fen)
     fp.parse()
     board = Board()
-    board.place_pieces(fp.board_list)
+    board.place_pieces(fp.pieces)
     board.get_piece_list()
     assert(str(board)) == expected
 

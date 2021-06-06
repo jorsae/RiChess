@@ -14,11 +14,19 @@ class Board():
 
     def place_piece(self, piece, rank, file):
         self.board[rank][file] = piece
-    
+
     def place_pieces(self, board_pieces):
         for bp in board_pieces:
             self.place_piece(bp.piece, bp.rank, bp.file)
     
+    def load_from_fen(self, fen_parser):
+        self.place_pieces(fen_parser.pieces)
+        self.player_turn = fen_parser.player_turn
+        self.halfmove = fen_parser.halfmove
+        self.fullmove = fen_parser.fullmove
+        # TODO: Put fen.last_move into move_history
+        # TODO: Implement castling rules from fen
+
     def get_piece_list(self):
         piece_list = []
         for rank in range(self.ranks):

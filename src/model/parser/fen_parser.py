@@ -6,7 +6,7 @@ re_number = re.compile(r'\d')
 class FenParser:
     def __init__(self, fen):
         self.fen = fen
-        self.board_list = []
+        self.pieces = []
         self.player_turn = None
         self.last_move = None # None if pawn was not moved last turn. Stored for en passant
         self.halfmove = 0 # Moves since last pawn move/capture, used for 50-move rule
@@ -14,7 +14,7 @@ class FenParser:
     
     def parse(self):
         ranks = self.fen.split(" ")[0].split("/")
-        self.board_list = self.parse_ranks(ranks)
+        self.pieces = self.parse_ranks(ranks)
         
         splits = self.fen.split(" ")
 
@@ -25,20 +25,19 @@ class FenParser:
         self.fullmove = self.parse_integer(splits[5])
 
     def parse_ranks(self, ranks):
-        board_list = []
+        pieces = []
         rank_number = 0
         for index in range(len(ranks)):
             file_number = 0
             for char in ranks[index]:
-                print(f'{char}: {rank_number} {file_number}')
                 if re_number.match(char):
                     file_number += int(char)
                 else:
                     piece = self.get_piece(char)
-                    board_list.append(BoardPiece(piece, rank_number, file_number))
+                    pieces.append(BoardPiece(piece, rank_number, file_number))
                     file_number += 1
             rank_number += 1
-        return board_list
+        return pieces
     
     def get_piece(self, char):
         char_lower = char.lower()
@@ -68,7 +67,8 @@ class FenParser:
             return Colour.WHITE
     
     def parse_castling(self, castling):
-        print(castling)
+        # TODO: Implement castling rules from fen
+        pass
     
     def parse_en_passant(self, en_passant):
         if en_passant == '-':
@@ -80,7 +80,6 @@ class FenParser:
         try:
             return int(text)
         except Exception as e:
-            print(e)
             return 0
     
     def __str__(self):
