@@ -15,4 +15,4 @@ class Knight(Piece):
     
     @property
     def movement(self):
-        pass
+        return []

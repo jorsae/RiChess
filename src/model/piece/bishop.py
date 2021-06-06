@@ -15,5 +15,4 @@ class Bishop(Piece):
     
     @staticmethod
     def movement():
-        return [(1, 1)]
-        # TODO: Change this to a MoveDescription obj
+        return []

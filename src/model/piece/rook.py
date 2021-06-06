@@ -15,4 +15,4 @@ class Rook(Piece):
     
     @property
     def movement(self):
-        pass
+        return []

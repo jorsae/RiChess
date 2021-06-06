@@ -15,4 +15,4 @@ class Pawn(Piece):
     
     @property
     def movement(self):
-        pass
+        return []

@@ -15,4 +15,4 @@ class King(Piece):
     
     @property
     def movement(self):
-        pass
+        return []
