@@ -6,6 +6,7 @@ re_number = re.compile(r'\d')
 class FenParser:
     def __init__(self, fen):
         self.fen = fen
+        self.board_list = []
         self.player_turn = None
         self.last_move = None # None if pawn was not moved last turn. Stored for en passant
         self.halfmove = 0 # Moves since last pawn move/capture, used for 50-move rule
@@ -13,21 +14,15 @@ class FenParser:
     
     def parse(self):
         ranks = self.fen.split(" ")[0].split("/")
-        bl = self.parse_ranks(ranks)
+        self.board_list = self.parse_ranks(ranks)
         
         splits = self.fen.split(" ")
 
         self.player_turn = self.parse_player_turn(splits[1])
-
         self.parse_castling(splits[2])
-
         self.last_move = self.parse_en_passant(splits[3])
-
         self.halfmove = self.parse_integer(splits[4])
-        
         self.fullmove = self.parse_integer(splits[5])
-        
-        return bl
 
     def parse_ranks(self, ranks):
         board_list = []
