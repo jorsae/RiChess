@@ -1,5 +1,5 @@
 from model.piece.utils.colour import Colour
-import model.game.game_utility as gl
+import model.game.game_helper as gh
 
 def pawn_moves(board, pawn, rank, file):
     available_moves = set()

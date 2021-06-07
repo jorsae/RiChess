@@ -3,6 +3,7 @@ import sys
 sys.path.append('src')
 from library.parser import *
 from model.game import *
+import model.game.game_helper as gh
 
 @pytest.mark.parametrize("fen, rank, file, expected_moves", [
     ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", 0, 0, []),
@@ -17,7 +18,7 @@ def test_rook_moves(fen, rank, file, expected_moves):
     chess_game.variant.load_rules()
     chess_game.board.load_from_fen(fp)
 
-    available_moves = chess_game.board.get_available_moves(rank, file)
+    available_moves = gh.get_available_moves(chess_game.board, rank, file)
     assert(available_moves) == expected_moves
     assert(chess_game.board.get_piece(rank, file).name) == 'Rook'
 
@@ -34,7 +35,7 @@ def test_bishop_moves(fen, rank, file, expected_moves):
     chess_game.variant.load_rules()
     chess_game.board.load_from_fen(fp)
 
-    available_moves = chess_game.board.get_available_moves(rank, file)
+    available_moves = gh.get_available_moves(chess_game.board, rank, file)
     assert(available_moves) == expected_moves
     assert(chess_game.board.get_piece(rank, file).name) == 'Bishop'
 
@@ -51,7 +52,7 @@ def test_queen_moves(fen, rank, file, expected_moves):
     chess_game.variant.load_rules()
     chess_game.board.load_from_fen(fp)
 
-    available_moves = chess_game.board.get_available_moves(rank, file)
+    available_moves = gh.get_available_moves(chess_game.board, rank, file)
     assert(available_moves) == expected_moves
     assert(chess_game.board.get_piece(rank, file).name) == 'Queen'
 
@@ -69,6 +70,6 @@ def test_queen_moves(fen, rank, file, expected_moves):
     chess_game.variant.load_rules()
     chess_game.board.load_from_fen(fp)
 
-    available_moves = chess_game.board.get_available_moves(rank, file)
+    available_moves = gh.get_available_moves(chess_game.board, rank, file)
     assert(available_moves) == expected_moves
     assert(chess_game.board.get_piece(rank, file).name) == 'Knight'

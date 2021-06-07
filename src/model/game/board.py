@@ -2,7 +2,7 @@ from typing import Sequence
 
 from model.piece import Colour, BoardPiece
 import model.game.move_logic as move_logic
-import model.game.game_utility as gu
+import model.game.game_helper as gh
 
 class Board():
     def __init__(self, ranks: int = 8, files: int = 8):
@@ -32,8 +32,8 @@ class Board():
         if piece is None:
             return # TODO: raise exception
         
-        available_moves = self.get_available_moves(rank, file)
-        can_move = gu.can_move_to(available_moves, new_rank, new_file)
+        available_moves = gh.get_available_moves(self, rank, file)
+        can_move = gh.can_move_to(available_moves, new_rank, new_file)
         if can_move is False:
             return # TODO: raise exception
         
@@ -43,54 +43,6 @@ class Board():
         
         self.board[rank][file] = None
         self.board[new_rank][new_file] = piece
-
-    def get_available_moves(self, rank, file):
-        piece = self.get_piece(rank, file)
-        if piece is None:
-            return []
-        
-        available_moves = set()
-        
-        # Default movement
-        for movement in piece.movement():
-            available_moves.update(self.get_moves_in_direction(movement, rank, file))
-        
-        # Special movement(pawn moves, castling)
-        if piece.name == 'Pawn':
-            available_moves.update(move_logic.pawn_moves(self, piece, rank, file))
-        elif piece.name == 'King':
-            pass # TODO: Implement castling in move_logic.py
-        
-        return list(available_moves)
-    
-    def get_moves_in_direction(self, movement, rank_start, file_start):
-        available_moves = set()
-        this = self.get_piece(rank_start, file_start)
-
-        def can_move_to(rank, file):
-            if rank > (self.ranks - 1) or rank < 0:
-                return False, False
-            if file > (self.files - 1) or file < 0:
-                return False, False
-            piece = self.get_piece(rank, file)
-            if piece is None:
-                return True, True
-            else:
-                if piece.colour == this.colour:
-                    return False, False
-                else:
-                    return True, False
-
-        # rank, file. is current position
-        for index in range(1, movement.range,):
-            rank = rank_start + (movement.vector[0] * index)
-            file = file_start + (movement.vector[1] * index)
-            can_move, cont = can_move_to(rank, file)
-            if can_move:
-                available_moves.add((rank, file))
-            if cont is False:
-                break
-        return available_moves
 
     def load_from_fen(self, fen_parser):
         self.place_pieces(fen_parser.pieces)

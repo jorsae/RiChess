@@ -1,6 +1,7 @@
 from library.parser import *
 from model.piece import *
 from model.game import *
+import model.game.game_helper as gh
 
 
 fp = FenParser("r1bqkbnr/pppppppp/8/8/4K3/8/PPPPPPPP/RNBQ1B1R w kq - 0 1")
@@ -14,7 +15,7 @@ file = 4
 
 piece = chess_game.board.get_piece(rank, file)
 print(piece.name)
-print(chess_game.board.get_available_moves(rank, file))
+print(gh.get_available_moves(chess_game.board, rank, file))
 print(chess_game.board)
 chess_game.board.move_to(0, 0, 1, 0)
 print(chess_game.board)
