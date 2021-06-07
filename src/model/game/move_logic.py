@@ -41,7 +41,6 @@ def pawn_moves(board, pawn, rank, file):
 
 # available_moves = move_logic.king_moves(board, piece, available_moves, rank, file)
 def king_moves(board, king, old_moves, rank, file):
-    print(old_moves)
     available_moves = set()
     
     enemy_colour = Colour.WHITE if king.colour == Colour.BLACK else Colour.BLACK
@@ -49,7 +48,6 @@ def king_moves(board, king, old_moves, rank, file):
     for move in old_moves:
         threat = is_threatened(board, king.colour, rank, move[0], move[1])
         if threat is False:
-            print(f'{threat}: {move}')
             available_moves.add(move)
     
     enemy_king = board.filter_piece_list(piece_filter='King', colour_filter=enemy_colour)[0]
@@ -59,7 +57,6 @@ def king_moves(board, king, old_moves, rank, file):
         file_diff = max(move[1], enemy_king.file) - min(move[1], enemy_king.file)
         if rank_diff <= 1 and file_diff <= 1:
             available_moves.remove(move)
-            continue
     
     return available_moves
 
