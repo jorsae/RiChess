@@ -47,6 +47,16 @@ class Board():
         self.board[rank][file] = None
         self.board[new_rank][new_file] = piece
 
+    def filter_piece_list(self, piece_filter: str = None, colour_filter: Colour = None):
+        current_list = self.piece_list
+        if piece_filter is not None:
+            current_list = list(filter(lambda p: p.piece.name == piece_filter, current_list))
+        
+        if colour_filter is not None:
+            current_list = list(filter(lambda p: p.piece.colour == colour_filter, current_list))
+        
+        return current_list
+
     def load_from_fen(self, fen_parser):
         self.place_pieces(fen_parser.pieces)
         self.player_turn = fen_parser.player_turn

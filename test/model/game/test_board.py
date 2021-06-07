@@ -66,3 +66,19 @@ def test_load_fen(fen, expected_player_turn, expected_halfmove, expected_fullmov
         piece = board.get_piece(rank, file)
         if piece is not None:
             assert(piece.has_moved)
+
+@pytest.mark.parametrize("piece_filter, colour_filter, expected", [
+    (None, None, 32),
+    ("Pawn", None, 16),
+    ("Pawn", Colour.WHITE, 8),
+    ("Rook", Colour.BLACK, 2),
+    (None, Colour.WHITE, 16),
+])
+def test_filter_piece_list(piece_filter, colour_filter, expected):
+    fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    fp.parse()
+
+    board = Board()
+    board.load_from_fen(fp)
+    filtered_list = board.filter_piece_list(piece_filter, colour_filter)
+    assert(len(filtered_list)) == expected

@@ -13,10 +13,13 @@ chess_game.board.load_from_fen(fp)
 
 
 print(chess_game.board)
-chess_game.board.move_to(0, 0, 0, 0)
-print(chess_game.board)
+# chess_game.board.move_to(0, 0, 0, 0)
+# print(chess_game.board)
+# annotator.annotate_move(chess_game.board, (4, 6), (4, 4))
 
-annotator.annotate_move(chess_game.board, (4, 6), (4, 4))
+pawns = chess_game.board.filter_piece_list(piece_filter="Pawn", colour_filter=Colour.WHITE)
+print(pawns)
+
 
 """
 fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")

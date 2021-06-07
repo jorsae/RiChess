@@ -11,4 +11,7 @@ class BoardPiece:
             return False
     
     def __str__(self):
-        return f'{self.piece}: {self.rank}, {self.file}'
+        return f'{self.piece.name}({self.piece.colour}): {self.rank}, {self.file}'
+    
+    def __repr__(self):
+        return self.__str__()
