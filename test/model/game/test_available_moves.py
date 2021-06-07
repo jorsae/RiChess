@@ -75,6 +75,7 @@ def test_knight_moves(fen, rank, file, expected_moves):
     assert(available_moves) == expected_moves
     assert(chess_game.board.get_piece(rank, file).name) == 'Knight'
 
+# TODO: Write more test cases for test_king_moves
 @pytest.mark.parametrize("fen, rank, file, expected_moves", [
     ("8/8/8/3k1K2/8/8/8/8 w - - 0 1", 5, 3, [(6, 2), (5, 4), (6, 4), (6, 3), (5, 2)]),
     ("8/8/8/3k4/8/3K4/8/8 w - - 0 1", 3, 5, [(4, 6), (4, 5), (2, 6), (3, 6), (2, 5)]),

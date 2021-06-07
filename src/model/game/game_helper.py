@@ -34,7 +34,6 @@ def get_available_moves(board, rank, file):
     if piece.name == 'Pawn':
         available_moves.update(move_logic.pawn_moves(board, piece, rank, file))
     elif piece.name == 'King':
-        # TODO: Overwrite potential old moves, to check if the king is in check
         available_moves = move_logic.king_moves(board, piece, available_moves, rank, file)
     
     return list(available_moves)

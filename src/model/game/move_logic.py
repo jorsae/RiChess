@@ -65,10 +65,6 @@ def king_moves(board, king, old_moves, rank, file):
 
 # returns True if rank, file can be captured by opponent. False otherwise
 def is_threatened(board, colour, start_rank, rank, file):
-    # TODO: This has to be specially coded, just getting available_moves will not work for e.g: pawns
-    # It will also cause a recursion, as you need to check if king can move to this square,
-    # which requires to check if the other king can move to this square,
-    # which requires to check if the other king ....
     enemy_colour = Colour.WHITE if colour == Colour.BLACK else Colour.BLACK
     enemies = board.filter_piece_list(colour_filter=enemy_colour)
     for enemy in enemies:
