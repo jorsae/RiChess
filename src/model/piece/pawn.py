@@ -7,7 +7,7 @@ class Pawn(Piece):
     
     @property
     def abbreviation(self):
-        return "p"
+        return ""
     
     @property
     def value(self):

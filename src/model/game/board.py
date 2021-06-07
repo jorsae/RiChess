@@ -76,9 +76,12 @@ class Board():
                 if piece is None:
                     line += ' 0 |'
                 else:
+                    abbr = piece.abbreviation
+                    if piece.name == 'Pawn':
+                        abbr = 'p'
                     if piece.colour == Colour.BLACK:
-                        line += f' {piece.abbreviation.lower()} |'
+                        line += f' {abbr.lower()} |'
                     else:
-                        line += f' {piece.abbreviation.upper()} |'
+                        line += f' {abbr.upper()} |'
             output += f'{line[:-2]}\n'
         return output

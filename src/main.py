@@ -1,24 +1,22 @@
 from library.parser import *
+import library.parser.annotator as annotator
 from model.piece import *
 from model.game import *
 import model.game.game_helper as gh
 
 
-fp = FenParser("r1bqkbnr/pppppppp/8/8/4K3/8/PPPPPPPP/RNBQ1B1R w kq - 0 1")
+fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
 fp.parse()
 chess_game = ChessGame()
 chess_game.variant.load_rules()
 chess_game.board.load_from_fen(fp)
 
-rank = 4
-file = 4
 
-piece = chess_game.board.get_piece(rank, file)
-print(piece.name)
-print(gh.get_available_moves(chess_game.board, rank, file))
 print(chess_game.board)
-chess_game.board.move_to(0, 0, 1, 0)
+chess_game.board.move_to(0, 0, 0, 0)
 print(chess_game.board)
+
+annotator.annotate_move(chess_game.board, (4, 6), (4, 4))
 
 """
 fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
