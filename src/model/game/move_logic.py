@@ -8,17 +8,17 @@ def pawn_moves(board, pawn, rank, file):
     advance_file = -1 if (pawn.colour == Colour.WHITE) else 1
     
     # check move forward + captures
-    if gl.out_of_bounds(rank, file + advance_file) is False:
+    if gh.out_of_bounds(board, rank, file + advance_file) is False:
         if board.get_piece(rank, file + advance_file) is None:
             available_moves.add((rank, file + advance_file))
     
-    if gl.out_of_bounds(rank + 1, file + advance_file) is False:
+    if gh.out_of_bounds(board, rank + 1, file + advance_file) is False:
         piece = board.get_piece(rank + 1, file + advance_file)
         if piece is not None:
             if piece.colour != pawn.colour:
                 available_moves.add((rank + 1, file + advance_file))
 
-    if gl.out_of_bounds(rank - 1, file + advance_file) is False:
+    if gh.out_of_bounds(board, rank - 1, file + advance_file) is False:
         piece = board.get_piece(rank - 1, file + advance_file)
         if piece is not None:
             if piece.colour != pawn.colour:
@@ -27,7 +27,7 @@ def pawn_moves(board, pawn, rank, file):
     # check first pawn move, for 2 moves:
     if pawn.has_moved is False:
         new_file = file + (advance_file*2)
-        if gl.out_of_bounds(rank, new_file) is False:
+        if gh.out_of_bounds(board, rank, new_file) is False:
             if board.get_piece(rank, new_file) is None:
                 available_moves.add((rank, new_file))
 
@@ -38,3 +38,50 @@ def pawn_moves(board, pawn, rank, file):
     # TODO: implement promotion
     
     return available_moves
+
+# available_moves = move_logic.king_moves(board, piece, available_moves, rank, file)
+def king_moves(board, king, old_moves, rank, file):
+    print(old_moves)
+    available_moves = set()
+    
+    enemy_colour = Colour.WHITE if king.colour == Colour.BLACK else Colour.BLACK
+    enemy_pieces = board.filter_piece_list(colour_filter=enemy_colour)
+    for move in old_moves:
+        threat = is_threatened(board, king.colour, rank, move[0], move[1])
+        if threat is False:
+            print(f'{threat}: {move}')
+            available_moves.add(move)
+    
+    enemy_king = board.filter_piece_list(piece_filter='King', colour_filter=enemy_colour)[0]
+    enemy_sum = enemy_king.rank + enemy_king.file
+    for move in reversed(list(available_moves)):
+        rank_diff = max(move[0], enemy_king.rank) - min(move[0], enemy_king.rank)
+        file_diff = max(move[1], enemy_king.file) - min(move[1], enemy_king.file)
+        if rank_diff <= 1 and file_diff <= 1:
+            available_moves.remove(move)
+            continue
+    
+    return available_moves
+
+# returns True if rank, file can be captured by opponent. False otherwise
+def is_threatened(board, colour, start_rank, rank, file):
+    # TODO: This has to be specially coded, just getting available_moves will not work for e.g: pawns
+    # It will also cause a recursion, as you need to check if king can move to this square,
+    # which requires to check if the other king can move to this square,
+    # which requires to check if the other king ....
+    enemy_colour = Colour.WHITE if colour == Colour.BLACK else Colour.BLACK
+    enemies = board.filter_piece_list(colour_filter=enemy_colour)
+    for enemy in enemies:
+        if enemy.piece.name == 'King':
+            continue
+        elif enemy.piece.name == 'Pawn':
+            advance_file = -1 if colour == Colour.WHITE else 1
+            pawn_file = file + advance_file
+            if enemy.file == pawn_file:
+                if enemy.rank == rank + 1 or enemy.rank == rank - 1:
+                    return True
+            continue
+        enemy_moves = gh.get_available_moves(board, enemy.rank, enemy.file)
+        if (rank, file) in enemy_moves:
+            return True
+    return False

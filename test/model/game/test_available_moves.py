@@ -63,7 +63,7 @@ def test_queen_moves(fen, rank, file, expected_moves):
     ("k7/8/8/4N3/8/8/8/7K w - - 0 1", 4, 3, [(2, 4), (5, 5), (6, 2), (5, 1), (2, 2), (3, 1), (6, 4), (3, 5)]),
     ("k6n/5P2/6r1/8/8/8/8/7K w - - 0 1", 7, 0, [(5, 1)])
 ])
-def test_queen_moves(fen, rank, file, expected_moves):
+def test_knight_moves(fen, rank, file, expected_moves):
     fp = FenParser(fen)
     fp.parse()
 
@@ -74,6 +74,24 @@ def test_queen_moves(fen, rank, file, expected_moves):
     available_moves = gh.get_available_moves(chess_game.board, rank, file)
     assert(available_moves) == expected_moves
     assert(chess_game.board.get_piece(rank, file).name) == 'Knight'
+
+@pytest.mark.parametrize("fen, rank, file, expected_moves", [
+    ("8/8/8/3k1K2/8/8/8/8 w - - 0 1", 5, 3, [(6, 2), (5, 4), (6, 4), (6, 3), (5, 2)]),
+    ("8/8/8/3k4/8/3K4/8/8 w - - 0 1", 3, 5, [(4, 6), (4, 5), (2, 6), (3, 6), (2, 5)]),
+    ("8/8/8/1K1k4/8/8/8/8 w - - 0 1", 1, 3, [(1, 2), (0, 4), (0, 3), (1, 4), (0, 2)]),
+    ("8/3K4/8/3k4/8/8/8/8 w - - 0 1", 3, 1, [(4, 0), (2, 1), (2, 0), (3, 0), (4, 1)]),
+    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", 4, 0, []),
+    ("r1bq1r2/pppp1ppp/2n2nk1/2b1p3/2B1P3/2N2N2/PPPP1PPP/R1BQ1RK1 w Q - 0 1", 6, 2, [(7, 2), (7, 3)])
+])
+def test_king_moves(fen, rank, file, expected_moves):
+    fp = FenParser(fen)
+    fp.parse()
+
+    board = Board()
+    board.load_from_fen(fp)
+    moves = gh.get_available_moves(board, rank, file)
+    assert(board.get_piece(rank, file).name) == 'King'
+    assert(moves) == expected_moves
 
 @pytest.mark.parametrize("fen, move_description, rank, file, expected_moves", [
     ("k7/8/8/4B3/8/8/8/1K6 w - - 0 1", MoveDescription((1, 1), 100), 4, 3, {(5, 4), (7, 6), (6, 5)}),

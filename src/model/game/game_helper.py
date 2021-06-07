@@ -1,4 +1,5 @@
 from model.piece import Colour, BoardPiece
+import model.game.move_logic as move_logic
 """
     Helper file to add a lot of utility methods
 """
@@ -29,12 +30,12 @@ def get_available_moves(board, rank, file):
     # Default movement
     for movement in piece.movement():
         available_moves.update(get_moves_in_direction(board, movement, rank, file))
-    
     # Special movement(pawn moves, castling)
     if piece.name == 'Pawn':
         available_moves.update(move_logic.pawn_moves(board, piece, rank, file))
     elif piece.name == 'King':
-        pass # TODO: Implement castling in move_logic.py
+        # TODO: Overwrite potential old moves, to check if the king is in check
+        available_moves = move_logic.king_moves(board, piece, available_moves, rank, file)
     
     return list(available_moves)
 
