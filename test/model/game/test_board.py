@@ -4,6 +4,7 @@ sys.path.append('src')
 from model.piece import *
 from library.parser import *
 from model.game import *
+import model.game.game_helper as gh
 
 board = Board()
 
@@ -51,11 +52,11 @@ testdata_test_place_piece = [
 
 @pytest.mark.parametrize("piece_list", testdata_test_place_piece)
 def test_get_piece_list(piece_list):
-    chess_board = Board()
+    board = Board()
     for bp in piece_list:
-        chess_board.place_piece(bp.piece, bp.rank, bp.file)
+        board.place_piece(bp.piece, bp.rank, bp.file)
     
-    bp_list = chess_board.get_piece_list()
+    bp_list = gh.get_piece_list(board)
     for index in range(len(bp_list)):
         assert(bp_list[index]) == piece_list[index]
 

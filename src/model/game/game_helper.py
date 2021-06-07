@@ -1,3 +1,4 @@
+from model.piece import Colour, BoardPiece
 """
     Helper file to add a lot of utility methods
 """
@@ -66,3 +67,17 @@ def get_moves_in_direction(board, movement, rank_start, file_start):
         if cont is False:
             break
     return available_moves
+
+# Returns a list of all pieces on the board. optional filter to only get 1 type of piece
+def get_piece_list(board, filter: str = None):
+    piece_list = []
+    for file in range(board.files):
+        for rank in range(board.ranks):
+            piece = board.get_piece(rank, file)
+            if piece is not None:
+                if filter is not None:
+                    if piece.name == filter:
+                        piece_list.append(BoardPiece(piece, rank, file))
+                else:
+                    piece_list.append(BoardPiece(piece, rank, file))
+    return piece_list

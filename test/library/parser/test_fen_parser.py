@@ -4,6 +4,7 @@ sys.path.append('src')
 from library.parser import *
 from model.piece import *
 from model.game import *
+import model.game.game_helper as gh
 
 """
     self.fen = fen
@@ -23,7 +24,7 @@ def test_board_position(fen, expected):
     fp.parse()
     board = Board()
     board.place_pieces(fp.pieces)
-    board.get_piece_list()
+    gh.get_piece_list(board)
     assert(str(board)) == expected
 
 @pytest.mark.parametrize("fen, expected", [

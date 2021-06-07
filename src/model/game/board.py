@@ -58,15 +58,6 @@ class Board():
             if piece is not None:
                 piece.has_moved = True
 
-    def get_piece_list(self):
-        piece_list = []
-        for file in range(self.files):
-            for rank in range(self.ranks):
-                piece = self.get_piece(rank, file)
-                if piece is not None:
-                    piece_list.append(BoardPiece(piece, rank, file))
-        return piece_list
-
     def __str__(self):
         output = ''
         for file in range(self.files):
