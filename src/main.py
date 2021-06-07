@@ -3,7 +3,7 @@ from model.piece import *
 from model.game import *
 
 
-fp = FenParser("rnbqkbnr/pppppppp/8/8/4K3/8/PPPPPPPP/RNBQ1B1R w kq - 0 1")
+fp = FenParser("r1bqkbnr/pppppppp/8/8/4K3/8/PPPPPPPP/RNBQ1B1R w kq - 0 1")
 fp.parse()
 chess_game = ChessGame()
 chess_game.variant.load_rules()
@@ -15,6 +15,8 @@ file = 4
 piece = chess_game.board.get_piece(rank, file)
 print(piece.name)
 print(chess_game.board.get_available_moves(rank, file))
+print(chess_game.board)
+chess_game.board.move_to(0, 0, 1, 0)
 print(chess_game.board)
 
 """

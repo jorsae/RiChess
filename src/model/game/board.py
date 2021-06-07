@@ -2,6 +2,7 @@ from typing import Sequence
 
 from model.piece import Colour, BoardPiece
 import model.game.move_logic as move_logic
+import model.game.game_utility as gu
 
 class Board():
     def __init__(self, ranks: int = 8, files: int = 8):
@@ -14,8 +15,35 @@ class Board():
         self.board = [[None for i in range(self.ranks)] for j in range(self.files)]
 
     def get_piece(self, rank, file):
-        return self.board[rank][file]
+        try:
+            return self.board[rank][file]
+        except:
+            return None
     
+    def place_piece(self, piece, rank, file):
+        self.board[rank][file] = piece
+
+    def place_pieces(self, board_pieces):
+        for bp in board_pieces:
+            self.place_piece(bp.piece, bp.rank, bp.file)
+    
+    def move_to(self, rank, file, new_rank, new_file):
+        piece = self.get_piece(rank, file)
+        if piece is None:
+            return # TODO: raise exception
+        
+        available_moves = self.get_available_moves(rank, file)
+        can_move = gu.can_move_to(available_moves, new_rank, new_file)
+        if can_move is False:
+            return # TODO: raise exception
+        
+        loc_piece = self.get_piece(new_rank, new_file)
+        if loc_piece is not None:
+            pass # TODO: implement so the move is seen as a capture move
+        
+        self.board[rank][file] = None
+        self.board[new_rank][new_file] = piece
+
     def get_available_moves(self, rank, file):
         piece = self.get_piece(rank, file)
         if piece is None:
@@ -53,13 +81,6 @@ class Board():
                 else:
                     return True, False
 
-        def out_of_bounds(rank, file):
-            if rank > (self.ranks - 1) or rank < 0:
-                return True
-            if file > (self.files - 1) or file < 0:
-                return True
-            return False
-        
         # rank, file. is current position
         for index in range(1, movement.range,):
             rank = rank_start + (movement.vector[0] * index)
@@ -70,14 +91,7 @@ class Board():
             if cont is False:
                 break
         return available_moves
-    
-    def place_piece(self, piece, rank, file):
-        self.board[rank][file] = piece
 
-    def place_pieces(self, board_pieces):
-        for bp in board_pieces:
-            self.place_piece(bp.piece, bp.rank, bp.file)
-    
     def load_from_fen(self, fen_parser):
         self.place_pieces(fen_parser.pieces)
         self.player_turn = fen_parser.player_turn
