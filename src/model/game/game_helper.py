@@ -12,9 +12,7 @@ def out_of_bounds(board, rank, file):
 
 # Checks if move is available to the piece
 def can_move_to(available_moves, rank, file):
-    print(available_moves)
     for moves in available_moves:
-        print(f'{moves[0]}, {moves[1]}')
         if moves[0] == rank and moves[1] == file:
             return True
     return False
