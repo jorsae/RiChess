@@ -44,22 +44,6 @@ def test_place_piece(board_piece):
     piece = chess_board.get_piece(board_piece.rank, board_piece.file)
     assert(board_piece.piece) == piece
 
-testdata_test_place_piece = [
-    ([BoardPiece(Pawn(Colour.BLACK), 1, 4)]),
-    ([BoardPiece(Pawn(Colour.BLACK), 2, 2), BoardPiece(Queen(Colour.WHITE), 3, 2), BoardPiece(Rook(Colour.WHITE), 3, 6)]),
-    ([BoardPiece(King(Colour.WHITE), 1, 4), BoardPiece(Knight(Colour.WHITE), 1, 4), BoardPiece(Rook(Colour.BLACK), 1, 4), BoardPiece(Rook(Colour.WHITE), 1, 4), BoardPiece(Queen(Colour.WHITE), 1, 4)]),
-]
-
-@pytest.mark.parametrize("piece_list", testdata_test_place_piece)
-def test_get_piece_list(piece_list):
-    board = Board()
-    for bp in piece_list:
-        board.place_piece(bp.piece, bp.rank, bp.file)
-    
-    bp_list = gh.get_piece_list(board)
-    for index in range(len(bp_list)):
-        assert(bp_list[index]) == piece_list[index]
-
 @pytest.mark.parametrize("fen, expected_player_turn, expected_halfmove, expected_fullmove, expected_move_history, expected_has_moved", [
     ("8/ppp1k3/8/8/8/8/PP6/RN1K3R w KQ e3 0 1", Colour.WHITE, 0, 1, ["e3"], [(0, 0), (4, 0), (7, 0)]),
     ("r1bqkbnr/p1p1pppp/2np4/8/2BP4/4PN2/PP3PPP/RNBQK2R b KQkq - 0 5", Colour.BLACK, 0, 5, [], []),

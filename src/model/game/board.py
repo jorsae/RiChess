@@ -9,6 +9,7 @@ class Board():
         self.ranks = ranks
         self.files = files
         self.move_history = []
+        self.piece_list = []
         self.turn = Colour.WHITE
         self.halfmove = 0
         self.fullmove = 0
@@ -22,6 +23,7 @@ class Board():
     
     def place_piece(self, piece, rank, file):
         self.board[rank][file] = piece
+        self.piece_list.append(BoardPiece(piece, rank, file))
 
     def place_pieces(self, board_pieces):
         for bp in board_pieces:
@@ -39,6 +41,7 @@ class Board():
         
         loc_piece = self.get_piece(new_rank, new_file)
         if loc_piece is not None:
+            # TODO: remove piece from self.piece_list
             pass # TODO: implement so the move is seen as a capture move
         
         self.board[rank][file] = None

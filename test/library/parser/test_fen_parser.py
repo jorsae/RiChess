@@ -24,7 +24,6 @@ def test_board_position(fen, expected):
     fp.parse()
     board = Board()
     board.place_pieces(fp.pieces)
-    gh.get_piece_list(board)
     assert(str(board)) == expected
 
 @pytest.mark.parametrize("fen, expected", [
