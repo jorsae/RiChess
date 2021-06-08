@@ -19,7 +19,8 @@ def get_piece_identifier(board, piece, start, end):
             start_pos.append((same_piece.rank, same_piece.file))
     
     identifier = ''
-    rank_id, file_id = 0, 0
+    rank_id = 0
+    file_id = 0
     for s_pos in start_pos:
         if s_pos[0] == start[0]:
             rank_id += 1
@@ -27,6 +28,7 @@ def get_piece_identifier(board, piece, start, end):
             file_id += 1
     
     id_min = min(rank_id, file_id)
+    print(id_min)
     if id_min > 1:
         return f'{translate_square(start[0], start[1])}'
     elif id_min < 1:
@@ -48,12 +50,11 @@ def annotate_move(board, start, end):
     if cap_piece is not None:
         capture = f'x{translate_square(end[0], end[1])}'
     
-    # TODO: check for conflicting moves (bishop/rook/knight/queen). e.g: Rad1
     # checking for conflicting moves. More than 1 piece of that type, can go to that square
     print(f'{piece} | {translate_square(start[0], start[1])} -> {translate_square(end[0], end[1])}')
     identifier = get_piece_identifier(board, piece, start, end)
-    print(identifier)
+    print(f'{identifier=}')
 
     # TODO: add annotation for castling
-
     print(f'{piece.abbreviation}{identifier}{capture}{translate_square(end[0], end[1])}')
+    return f'{piece.abbreviation}{identifier}{capture}{translate_square(end[0], end[1])}'
