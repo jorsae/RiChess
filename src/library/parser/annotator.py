@@ -4,6 +4,7 @@ def translate_square(rank, file):
     chars = 'abcdefgh'
     return f'{chars[rank]}{8-file}'
 
+# TODO: Clean this up
 def get_piece_identifier(board, piece, start, end):
     if piece.name == 'Pawn':
         return ''
@@ -28,6 +29,8 @@ def get_piece_identifier(board, piece, start, end):
     id_min = min(rank_id, file_id)
     if id_min > 1:
         return f'{translate_square(start[0], start[1])}'
+    elif id_min < 1:
+        return ''
     else:
         if rank_id <= 1:
             chars = 'abcdefgh'

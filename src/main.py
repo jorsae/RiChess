@@ -17,7 +17,7 @@ print(gh.get_available_moves(chess_game.board, 5, 3))
 
 # chess_game.board.move_to(0, 0, 0, 0)
 # print(chess_game.board)
-annotator.annotate_move(chess_game.board, (6, 5), (4, 3))
+annotator.annotate_move(chess_game.board, (5, 1), (4, 3))
 
 """
 fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
