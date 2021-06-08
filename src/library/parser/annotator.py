@@ -1,4 +1,5 @@
 import model.game.game_helper as gh
+from model.piece.utils.colour import Colour
 
 def translate_square(rank, file):
     chars = 'abcdefgh'
@@ -35,10 +36,13 @@ def get_piece_identifier(board, piece, start, end):
         return ''
     else:
         if rank_id <= 1:
-            chars = 'abcdefgh'
+            chars = 'abcdefgh' #TODO: This is ugly
             return f'{chars[start[0]]}'
         else:
-            return start[1] + 1
+            if piece.colour == Colour.BLACK:
+                return start[1] + 1
+            else:
+                return 8 - start[1]
 
 def annotate_move(board, start, end):
     piece = board.get_piece(start[0], start[1])
