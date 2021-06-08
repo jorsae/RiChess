@@ -45,4 +45,4 @@ class Piece(metaclass=ABCMeta):
             return False
 
     def __str__(self) -> str:
-        return f'[{self.abbreviation}] {self.name}: {self.value}'
+        return f'[{self.abbreviation}] {self.name}: {self.value} | {self.colour}'
