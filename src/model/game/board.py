@@ -29,17 +29,17 @@ class Board():
         for bp in board_pieces:
             self.place_piece(bp.piece, bp.rank, bp.file)
     
-    def move_to(self, rank, file, new_rank, new_file):
-        piece = self.get_piece(rank, file)
+    def move_to(self, start, end):
+        piece = self.get_piece(start[0], start[1])
         if piece is None:
             return # TODO: raise exception
         
-        available_moves = gh.get_available_moves(self, rank, file)
-        can_move = gh.can_move_to(available_moves, new_rank, new_file)
+        available_moves = gh.get_available_moves(self, start[0], start[1])
+        can_move = gh.can_move_to(available_moves, end[0], end[1])
         if can_move is False:
             return # TODO: raise exception
         
-        loc_piece = self.get_piece(new_rank, new_file)
+        loc_piece = self.get_piece(end[0], end[1])
         if loc_piece is not None:
             # TODO: remove piece from self.piece_list
             pass # TODO: implement so the move is seen as a capture move
@@ -47,12 +47,12 @@ class Board():
         # check for pawn promotion
         if piece.name == 'Pawn':
             promotion_file = 0 if (piece.colour == Colour.WHITE) else 7
-            if new_file == promotion_file:
+            if end[1] == promotion_file:
                 piece = gh.get_pawn_promotion(piece.colour)
 
 
-        self.board[rank][file] = None
-        self.board[new_rank][new_file] = piece
+        self.board[start[0]][start[1]] = None
+        self.board[end[0]][end[1]] = piece
 
     def filter_piece_list(self, piece_filter: str = None, colour_filter: Colour = None):
         current_list = self.piece_list

@@ -17,12 +17,11 @@ chess_game.board.load_from_fen(fp)
 print(chess_game.board)
 print(gh.get_available_moves(chess_game.board, 5, 3))
 
-# chess_game.board.move_to(0, 0, 0, 0)
 # print(chess_game.board)
 annotation = annotator.annotate_move(chess_game.board, (6, 5), (4, 3))
 print(annotation)
 print(chess_game.board)
-chess_game.board.move_to(1, 1, 1, 0)
+chess_game.board.move_to((1, 1), (1, 0))
 print(chess_game.board)
 """
 fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
