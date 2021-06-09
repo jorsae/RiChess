@@ -50,7 +50,6 @@ class Board():
             if end[1] == promotion_file:
                 piece = gh.get_pawn_promotion(piece.colour)
 
-
         self.board[start[0]][start[1]] = None
         self.board[end[0]][end[1]] = piece
 
