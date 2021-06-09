@@ -35,8 +35,6 @@ def pawn_moves(board, pawn, rank, file):
     if len(board.move_history) > 0:
         pass
     
-    # TODO: implement promotion
-    
     return available_moves
 
 # available_moves = move_logic.king_moves(board, piece, available_moves, rank, file)
