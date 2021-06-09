@@ -7,6 +7,7 @@ import model.game.game_helper as gh
 
 fp = FenParser("r1b1kbnr/pppppppp/2n5/5K2/3q4/8/PPPPPPPP/RNBQ1BNR w kq - 0 1")
 fp = FenParser("8/r1B2kBp/2q5/8/b6n/2B3B1/P1P1P1P1/RN1QKBNR w KQ - 11 27")
+fp = FenParser("8/rPB2kBp/2q5/4p3/b6n/2B3B1/P1P1P3/RN1QKBNR w KQ - 11 27")
 # ("8/r1B2kBp/2q5/8/b6n/2B3B1/P1P1P1P1/RN1QKBNR w KQ - 11 27", (6, 5), (4, 3), 'Bhe5'),
 fp.parse()
 chess_game = ChessGame()
@@ -20,7 +21,9 @@ print(gh.get_available_moves(chess_game.board, 5, 3))
 # print(chess_game.board)
 annotation = annotator.annotate_move(chess_game.board, (6, 5), (4, 3))
 print(annotation)
-
+print(chess_game.board)
+chess_game.board.move_to(1, 1, 1, 0)
+print(chess_game.board)
 """
 fp = FenParser("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
 fp.parse()

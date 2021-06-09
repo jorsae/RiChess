@@ -1,4 +1,5 @@
 from model.piece import Colour, BoardPiece
+from model.piece import *
 import model.game.move_logic as move_logic
 """
     Helper file to add a lot of utility methods
@@ -67,3 +68,16 @@ def get_moves_in_direction(board, movement, rank_start, file_start):
         if cont is False:
             break
     return available_moves
+
+def get_pawn_promotion(colour):
+    promotion = input('which piece do you want to promote too?')
+    if promotion == 'q':
+        return Queen(colour)
+    elif promotion == 'r':
+        return Rook(colour)
+    elif promotion == 'b':
+        return Bishop(colour)
+    elif promotion == 'n':
+        return Knight(colour)
+    else:
+        return Queen(colour)

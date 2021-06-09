@@ -44,6 +44,13 @@ class Board():
             # TODO: remove piece from self.piece_list
             pass # TODO: implement so the move is seen as a capture move
         
+        # check for pawn promotion
+        if piece.name == 'Pawn':
+            promotion_file = 0 if (piece.colour == Colour.WHITE) else 7
+            if new_file == promotion_file:
+                piece = gh.get_pawn_promotion(piece.colour)
+
+
         self.board[rank][file] = None
         self.board[new_rank][new_file] = piece
 

@@ -6,6 +6,7 @@ from model.piece import *
 from model.game import *
 import model.game.game_helper as gh
 import library.parser.annotator as annotator
+from model.piece import Colour, BoardPiece
 
 @pytest.mark.parametrize("fen, start, end, expected", [
     ("8/r1B2kBp/2q5/8/b6n/2B3B1/P1P1P1P1/RN1QKBNR w KQ - 11 27", (6, 5), (4, 3), 'Bg3e5'),
@@ -28,16 +29,20 @@ def test_conflicting_moves(fen, start, end, expected):
     annotation = annotator.annotate_move(board, start, end)
     assert(annotation) == expected
 
-# TODO: add test for promotion
-@pytest.mark.parametrize("fen, start, end, expected", [
-    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (4, 1), (4, 2), 'e6'),
-    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (4, 1), (4, 3), 'e5'),
-    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (4, 6), (4, 4), 'e4'),
-    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (0, 6), (0, 5), 'a3'),
-    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (0, 6), (0, 5), 'a3'),
-    ("rnbqkbnr/ppp1p1pp/5p2/3p4/2PP4/4P3/PP3PPP/RNBQKBNR b KQkq - 0 3", (3, 3), (2, 4), 'dxc4'),
+# TODO: add test for en passant
+@pytest.mark.parametrize("fen, start, end, promotion_piece, expected", [
+    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (4, 1), (4, 2), None, 'e6'),
+    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (4, 1), (4, 3), None, 'e5'),
+    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (4, 6), (4, 4), None, 'e4'),
+    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (0, 6), (0, 5), None, 'a3'),
+    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (0, 6), (0, 5), None, 'a3'),
+    ("rnbqkbnr/ppp1p1pp/5p2/3p4/2PP4/4P3/PP3PPP/RNBQKBNR b KQkq - 0 3", (3, 3), (2, 4), None, 'dxc4'),
+    ("8/rPB2kBp/2q5/4p3/b6n/2B3B1/P1P1P3/RN1QKBNR w KQ - 11 27", (1, 1), (1, 0), Queen(Colour.WHITE), 'b8=Q'),
+    ("8/rPB2kBp/2q5/4p3/b6n/2B3B1/P1P1P3/RN1QKBNR w KQ - 11 27", (1, 1), (1, 0), Rook(Colour.WHITE), 'b8=R'),
+    ("8/rPB2kBp/2q5/4p3/b6n/2B3B1/P1P1P3/RN1QKBNR w KQ - 11 27", (1, 1), (1, 0), Bishop(Colour.WHITE), 'b8=B'),
+    ("8/rPB2kBp/2q5/4p3/b6n/2B3B1/P1P1P3/RN1QKBNR w KQ - 11 27", (1, 1), (1, 0), Knight(Colour.WHITE), 'b8=N'),
 ])
-def test_pawn_moves(fen, start, end, expected):
+def test_pawn_moves(fen, start, end, promotion_piece, expected):
     fp = FenParser(fen)
     fp.parse()
     
@@ -45,5 +50,5 @@ def test_pawn_moves(fen, start, end, expected):
     chess_game.variant.load_rules()
     chess_game.board.load_from_fen(fp)
     
-    annotation = annotator.annotate_move(chess_game.board, start, end)
+    annotation = annotator.annotate_move(chess_game.board, start, end, promotion_piece)
     assert(annotation) == expected

@@ -1,5 +1,6 @@
 import model.game.game_helper as gh
 from model.piece.utils.colour import Colour
+from model.piece import *
 
 def translate_square(rank, file):
     chars = 'abcdefgh'
@@ -44,8 +45,7 @@ def get_piece_identifier(board, piece, start, end):
             else:
                 return 8 - start[1]
 
-def annotate_move(board, start, end):
-    print(translate_square(start[0], start[1]))
+def annotate_move(board, start, end, promotion_piece = None):
     piece = board.get_piece(start[0], start[1])
     if piece is None:
         return None
@@ -59,11 +59,17 @@ def annotate_move(board, start, end):
         else:
             capture = f'x'
     
-    # checking for conflicting moves. More than 1 piece of that type, can go to that square
-    print(f'{piece} | {translate_square(start[0], start[1])} -> {translate_square(end[0], end[1])}')
-    identifier = get_piece_identifier(board, piece, start, end)
-    print(f'{identifier=}')
+    promotion = ''
+    if promotion_piece is not None:
+        promotion = f'={promotion_piece.abbreviation}'
 
     # TODO: add annotation for castling
-    print(f'{piece.abbreviation}{identifier}{capture}{translate_square(end[0], end[1])}')
-    return f'{piece.abbreviation}{identifier}{capture}{translate_square(end[0], end[1])}'
+    
+    # checking for conflicting moves. More than 1 piece of that type, can go to that square
+    identifier = get_piece_identifier(board, piece, start, end)
+
+    # print(f'{piece} | {translate_square(start[0], start[1])} -> {translate_square(end[0], end[1])}')
+    # print(f'{identifier=}')
+    # print(f'{piece.abbreviation}{identifier}{capture}{translate_square(end[0], end[1])}')
+    
+    return f'{piece.abbreviation}{identifier}{capture}{translate_square(end[0], end[1])}{promotion}'
