@@ -45,6 +45,7 @@ def get_piece_identifier(board, piece, start, end):
                 return 8 - start[1]
 
 def annotate_move(board, start, end):
+    print(translate_square(start[0], start[1]))
     piece = board.get_piece(start[0], start[1])
     if piece is None:
         return None
@@ -52,7 +53,11 @@ def annotate_move(board, start, end):
     cap_piece = board.get_piece(end[0], end[1])
     capture = ''
     if cap_piece is not None:
-        capture = f'x{translate_square(end[0], end[1])}'
+        if piece.name == 'Pawn':
+            chars = 'abcdefgh' #TODO: This is ugly
+            capture = f'{chars[start[0]]}x'
+        else:
+            capture = f'x'
     
     # checking for conflicting moves. More than 1 piece of that type, can go to that square
     print(f'{piece} | {translate_square(start[0], start[1])} -> {translate_square(end[0], end[1])}')
