@@ -53,11 +53,7 @@ class Board():
                 promotion_piece = gh.get_pawn_promotion(piece.colour)
 
         if start is not None and end is not None:
-            print(start)
-            print(end)
-            print(promotion_piece)
             annotation = annotator.annotate_move(self, start, end, promotion_piece)
-            print(annotation)
             self.move_history.append(annotation)
 
         self.board[start[0]][start[1]] = None

@@ -53,3 +53,8 @@ def test_pawn_moves(fen, start, end, promotion_piece, expected):
     
     annotation = annotator.annotate_move(chess_game.board, start, end, promotion_piece)
     assert(annotation) == expected
+
+# TODO: Add tests for knight
+# TODO: Add tests for bishop
+# TODO: Add tests for rook
+# TODO: Add tests for queen
