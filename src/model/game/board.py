@@ -3,6 +3,8 @@ from typing import Sequence
 from model.piece import Colour, BoardPiece
 import model.game.move_logic as move_logic
 import model.game.game_helper as gh
+import library.parser.annotator as annotator
+import library.parser.uci as uci
 
 class Board():
     def __init__(self, ranks: int = 8, files: int = 8):
@@ -50,6 +52,13 @@ class Board():
             if end[1] == promotion_file:
                 promotion_piece = gh.get_pawn_promotion(piece.colour)
 
+        if start is not None and end is not None:
+            print(start)
+            print(end)
+            print(promotion_piece)
+            annotation = annotator.annotate_move(self, start, end, promotion_piece)
+            print(annotation)
+            self.move_history.append(annotation)
 
         self.board[start[0]][start[1]] = None
         self.board[end[0]][end[1]] = piece if promotion_piece is None else promotion_piece
@@ -59,7 +68,7 @@ class Board():
         bp.file = end[1]
         if promotion_piece is not None:
             bp.piece = promotion_piece
-    
+        
     def remove_list_piece(self, rank, file):
         for bp in self.piece_list:
             if bp.rank == rank and bp.file == file:

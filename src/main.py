@@ -29,6 +29,8 @@ def play_game(fen):
             else:
                 pieces = chess_game.board.filter_piece_list(piece_filter=p)
                 print(pieces)
+        elif move == 'mh':
+            print(chess_game.board.move_history)
         start, end = uci.get_move(move)
         if start is not None and end is not None:
             annotation = annotator.annotate_move(chess_game.board, start, end, None)
