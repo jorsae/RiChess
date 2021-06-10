@@ -21,8 +21,10 @@ def play_game(fen):
             continue
         start, end = uci.get_move(move)
         if start is not None and end is not None:
+            annotation = annotator.annotate_move(chess_game.board, start, end, None)
             chess_game.board.move_to(start, end)
             print(chess_game.board)
+            print(annotation)
 
 play_game("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
 

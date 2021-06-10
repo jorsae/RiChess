@@ -13,13 +13,16 @@ def get_piece_identifier(board, piece, start, end):
     
     start_pos = []
     same_pieces = board.filter_piece_list(piece_filter=piece.name, colour_filter=piece.colour)
+    print(f'{same_pieces=}')
     for same_piece in same_pieces:
         moves = gh.get_available_moves(board, same_piece.rank, same_piece.file)
         moves = list(filter(lambda m: m[0] == end[0] and m[1] == end[1], moves))
+        print(f'{moves=} | {end=}')
         if moves == [end]:
-            print(f'{same_piece}: {moves} vs {end[0]}, {end[1]}')
+            print(f'added: {same_piece}: {moves} vs {end[0]}, {end[1]}')
             start_pos.append((same_piece.rank, same_piece.file))
     
+    print(f'{start_pos=}')
     identifier = ''
     rank_id = 0
     file_id = 0
@@ -36,6 +39,10 @@ def get_piece_identifier(board, piece, start, end):
     elif id_min < 1:
         return ''
     else:
+        # TODO: clean up, this is ugly af
+        if len(start_pos) == 1:
+            if start_pos[0][0] == start[0] and start_pos[0][1] == start[1]:
+                return ''
         if rank_id <= 1:
             chars = 'abcdefgh' #TODO: This is ugly
             return f'{chars[start[0]]}'

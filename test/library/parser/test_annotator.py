@@ -14,7 +14,8 @@ from model.piece import Colour, BoardPiece
     ("rnbqkb1r/pppp1ppp/5n2/4p3/4P3/8/PPPPNPPP/RNBQKB1R w KQkq - 0 1", (1, 7), (2, 5), 'Nbc3'),
     ("r4rk1/ppp1qppp/2npbn2/2b1p1B1/2B1P3/2NP1N2/PPPQ1PPP/R4RK1 w Qq - 0 1", (0, 0), (3, 0), 'Rad8'),
     ("r4rk1/ppp1qppp/Q1npbn2/2b1p1B1/2B1P3/3P1N2/QPP2PPP/R4RK1 w Qq - 0 1", (0, 2), (0, 4), 'Q6a4'),
-    ("r4rk1/Qpp1qppp/2npbn2/2b1p1B1/2B1P3/3P1N2/QPP2PPP/R4RK1 w Qq - 0 1", (0, 1), (0, 4), 'Q7a4')
+    ("r4rk1/Qpp1qppp/2npbn2/2b1p1B1/2B1P3/3P1N2/QPP2PPP/R4RK1 w Qq - 0 1", (0, 1), (0, 4), 'Q7a4'),
+    ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (6, 7), (5, 5), 'Nf3'),
 ])
 def test_conflicting_moves(fen, start, end, expected):
     fp = FenParser(fen)
