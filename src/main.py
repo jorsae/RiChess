@@ -19,6 +19,16 @@ def play_game(fen):
         if move == 'q':
             play = False
             continue
+        elif move == 'board':
+            print(chess_game.board)
+        elif move == 'pl':
+            p = input('piece: ')
+            if p == '':
+                pieces = chess_game.board.filter_piece_list()
+                print(pieces)
+            else:
+                pieces = chess_game.board.filter_piece_list(piece_filter=p)
+                print(pieces)
         start, end = uci.get_move(move)
         if start is not None and end is not None:
             annotation = annotator.annotate_move(chess_game.board, start, end, None)

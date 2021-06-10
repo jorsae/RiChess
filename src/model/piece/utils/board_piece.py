@@ -5,7 +5,7 @@ class BoardPiece:
         self.file = file
     
     def __eq__(self, other):
-        if self.piece == self.piece and self.rank == other.rank and self.file == other.file:
+        if self.piece == other.piece and self.rank == other.rank and self.file == other.file:
             return True
         else:
             return False

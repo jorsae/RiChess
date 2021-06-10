@@ -39,19 +39,31 @@ class Board():
         if can_move is False:
             return # TODO: raise exception
         
-        loc_piece = self.get_piece(end[0], end[1])
-        if loc_piece is not None:
-            # TODO: remove piece from self.piece_list
-            pass # TODO: implement so the move is seen as a capture move
+        # Remove captured piece
+        if self.get_piece(end[0], end[1]) is not None:
+            self.remove_list_piece(end[0], end[1])
         
         # check for pawn promotion
+        promotion_piece = None
         if piece.name == 'Pawn':
             promotion_file = 0 if (piece.colour == Colour.WHITE) else 7
             if end[1] == promotion_file:
-                piece = gh.get_pawn_promotion(piece.colour)
+                promotion_piece = gh.get_pawn_promotion(piece.colour)
+
 
         self.board[start[0]][start[1]] = None
-        self.board[end[0]][end[1]] = piece
+        self.board[end[0]][end[1]] = piece if promotion_piece is None else promotion_piece
+        # Update piece moved in self.piece_list location
+        bp = list(filter(lambda p: p.rank == start[0] and p.file == start[1], self.piece_list))[0]
+        bp.rank = end[0]
+        bp.file = end[1]
+        if promotion_piece is not None:
+            bp.piece = promotion_piece
+    
+    def remove_list_piece(self, rank, file):
+        for bp in self.piece_list:
+            if bp.rank == rank and bp.file == file:
+                self.piece_list.remove(bp)
 
     def filter_piece_list(self, piece_filter: str = None, colour_filter: Colour = None):
         current_list = self.piece_list
