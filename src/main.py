@@ -31,6 +31,11 @@ def play_game(fen):
                 print(pieces)
         elif move == 'mh':
             print(chess_game.board.move_history)
+        elif move == 'amove':
+            sq = input('square:')
+            rank, file = uci.untranslate_square(sq[:1], sq[1:])
+            print('available moves for')
+            print(gh.get_available_moves(chess_game.board, rank, file))
         start, end = uci.get_move(move)
         if start is not None and end is not None:
             annotation = annotator.annotate_move(chess_game.board, start, end, None)

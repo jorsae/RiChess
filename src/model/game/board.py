@@ -52,10 +52,13 @@ class Board():
             promotion_file = 0 if (piece.colour == Colour.WHITE) else 7
             if end[1] == promotion_file:
                 promotion_piece = gh.get_pawn_promotion(piece.colour)
+                promotion_piece.has_moved = True
 
         if start is not None and end is not None:
             self.move_history.append(MoveHistory(start, end))
 
+        piece.has_moved = True
+        
         self.board[start[0]][start[1]] = None
         self.board[end[0]][end[1]] = piece if promotion_piece is None else promotion_piece
         # Update piece moved in self.piece_list location
