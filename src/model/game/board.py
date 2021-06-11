@@ -5,6 +5,7 @@ import model.game.move_logic as move_logic
 import model.game.game_helper as gh
 import library.parser.annotator as annotator
 import library.parser.uci as uci
+from model.interface.move_history import MoveHistory
 
 class Board():
     def __init__(self, ranks: int = 8, files: int = 8):
@@ -53,8 +54,7 @@ class Board():
                 promotion_piece = gh.get_pawn_promotion(piece.colour)
 
         if start is not None and end is not None:
-            annotation = annotator.annotate_move(self, start, end, promotion_piece)
-            self.move_history.append(annotation)
+            self.move_history.append(MoveHistory(start, end))
 
         self.board[start[0]][start[1]] = None
         self.board[end[0]][end[1]] = piece if promotion_piece is None else promotion_piece
