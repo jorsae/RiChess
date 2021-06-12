@@ -7,4 +7,4 @@ class MoveHistory:
         return self.__str__()
 
     def __str__(self):
-        return f'{self.start}, {self.end}'
+        return f'{self.start},{self.end}'

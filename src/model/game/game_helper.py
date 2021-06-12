@@ -69,6 +69,7 @@ def get_moves_in_direction(board, movement, rank_start, file_start):
             break
     return available_moves
 
+# User input that determines which piece a pawn is promoted too
 def get_pawn_promotion(colour):
     promotion = input('which piece do you want to promote too?')
     if promotion == 'q':
@@ -81,3 +82,16 @@ def get_pawn_promotion(colour):
         return Knight(colour)
     else:
         return Queen(colour)
+
+# returns en passant move
+def get_en_passant(board, pawn, rank, file, advance_file):
+    if len(board.move_history) > 0:
+        last_move = board.move_history[len(board.move_history) - 1]
+        p = board.get_piece(last_move.end[0], last_move.end[1])
+        if p.name == 'Pawn':
+            if file == last_move.end[1]:
+                if rank == last_move.end[0] + 1:
+                    return last_move.end[0], last_move.end[1] + advance_file
+                elif rank == last_move.end[0] - 1:
+                    return last_move.end[0], last_move.end[1] + advance_file
+    return None, None

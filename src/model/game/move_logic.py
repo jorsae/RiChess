@@ -30,33 +30,12 @@ def pawn_moves(board, pawn, rank, file):
         if gh.out_of_bounds(board, rank, new_file) is False:
             if board.get_piece(rank, new_file) is None:
                 available_moves.add((rank, new_file))
-
-    # TODO: implement en passant
-    if len(board.move_history) > 0:
-        last_move = board.move_history[len(board.move_history) - 1]
-        p = board.get_piece(last_move.end[0], last_move.end[1])
-        if p.name == 'Pawn':
-            print(f'pawn move was: {last_move}')
-            print(f'this pawn move: {rank=}, {file=}')
-            diff = 8
-            if p.colour == Colour.BLACK:
-                diff = 0
-            
-            print(f'{diff=}, {advance_file=} | {p.colour=}')
-            print(f'vuln_rank: {last_move.end[0]}')
-            print(f'vuln_file: {last_move.end[1] + advance_file} & {last_move.end[1] - advance_file}')
-            print(f'pawn_file required: {last_move.end[1]}')
-            if file == last_move.end[1]:
-                print('correct pawn_file for en-passant')
-                print(f'file: {file + advance_file}')
-                print(f'rank: {rank + advance_file}')
-                if rank == last_move.end[0] + 1:
-                    print('added en-passant1')
-                    available_moves.add((last_move.end[0], last_move.end[1] + advance_file))
-                elif rank == last_move.end[0] - 1:
-                    print('added en-passant2')
-                    available_moves.add((last_move.end[0], last_move.end[1] + advance_file))
     
+    # check for en passant
+    ep_rank, ep_file = gh.get_en_passant(board, pawn, rank, file, advance_file)
+    if ep_rank is not None:
+        available_moves.add((ep_rank, ep_file))
+
     return available_moves
 
 # available_moves = move_logic.king_moves(board, piece, available_moves, rank, file)
