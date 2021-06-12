@@ -5,6 +5,7 @@ from library.parser import *
 from model.piece import *
 from model.game import *
 import model.game.game_helper as gh
+from model.interface.move_history import MoveHistory
 
 """
     self.fen = fen
@@ -63,15 +64,15 @@ def test_fullmove(fen, expected):
 
 @pytest.mark.parametrize("fen, expected", [
     ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", None),
-    ("rnbqkbnr/pp2pppp/2p5/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3", "d6"),
-    ("rnbqkbnr/2p1p1pp/8/PPPp4/5pP1/3P4/4PP1P/RNBQKBNR b KQkq g3 0 8", "g3"),
-    ("rnbqkbnr/p1p1pp1p/3p4/1p6/1PP2PpP/3PP3/P5P1/RNBQKBNR b - f3 0 6", "f3"),
-    ("7k/p1p2p1p/3p4/1p2pP2/1PP4P/3PP1p1/P5P1/RNBQKBNR w KQkq e6 0 8", "e6"),
+    ("rnbqkbnr/pp2pppp/2p5/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3", MoveHistory((3, 1), (3, 3))),
+    ("rnbqkbnr/2p1p1pp/8/PPPp4/5pP1/3P4/4PP1P/RNBQKBNR b KQkq g3 0 8", MoveHistory((6, 6), (6, 4))),
+    ("rnbqkbnr/p1p1pp1p/3p4/1p6/1PP2PpP/3PP3/P5P1/RNBQKBNR b - f3 0 6", MoveHistory((5, 6), (5, 4))),
+    ("7k/p1p2p1p/3p4/1p2pP2/1PP4P/3PP1p1/P5P1/RNBQKBNR w KQkq e6 0 8", MoveHistory((4, 1), (4, 3))),
 ])
 def test_last_move(fen, expected):
     fp = FenParser(fen)
     fp.parse()
-    assert(fp.last_move) == expected
+    assert(str(fp.last_move)) == str(expected)
 
 @pytest.mark.parametrize("fen, expected", [
     ("rnbqkbnr/p1p1pp1p/3p4/1p6/1PP2PpP/3PP3/P5P1/RNBQKBNR b - f3 0 6", [(0, 0), (4, 0), (7, 0), (0, 7), (4, 7), (7, 7)]),

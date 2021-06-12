@@ -1,5 +1,6 @@
 import re
 from model.piece import *
+from model.interface.move_history import MoveHistory
 
 re_number = re.compile(r'\d')
 
@@ -101,7 +102,13 @@ class FenParser:
         if en_passant == '-':
             return None
         else:
-            return en_passant
+            chars = 'abcdefgh' #TODO: This is ugly
+            rank = int(chars.index(en_passant[:1]))
+            file = 8 - int(en_passant[1:])
+            if file == 2:
+                return MoveHistory((rank, file - 1), (rank, file + 1))
+            else:
+                return MoveHistory((rank, file + 1), (rank, file - 1))
     
     def parse_integer(self, text):
         try:
