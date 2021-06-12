@@ -8,7 +8,7 @@ import model.game.game_helper as gh
 import library.parser.annotator as annotator
 from model.piece import Colour, BoardPiece
 
-# TODO: add test for en passant, check and checkmate
+# TODO: add test for, check and checkmate
 
 @pytest.mark.parametrize("fen, start, end, promotion_piece, expected", [
     ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (4, 1), (4, 2), None, 'e6'),
@@ -92,6 +92,25 @@ def test_rook_annotation(fen, start, end, expected):
     ("r4rk1/Qpp1qppp/2npbn2/2b1p1B1/2B1P3/3P1N2/QPP2PPP/R4RK1 w Qq - 0 1", (0, 1), (0, 4), 'Q7a4'),
 ])
 def test_queen_annotation(fen, start, end, expected):
+    fp = FenParser(fen)
+    fp.parse()
+    
+    chess_game = ChessGame()
+    chess_game.variant.load_rules()
+    chess_game.board.load_from_fen(fp)
+    
+    annotation = annotator.annotate_move(chess_game.board, start, end)
+    assert(annotation) == expected
+
+@pytest.mark.parametrize("fen, start, end, expected", [
+    ("r3k2r/pppq1ppp/2npbn2/2b1p3/2B1P3/2NPBN2/PPPQ1PPP/R3K2R w KQkq - 0 1", (4, 7), (4, 6), 'Ke2'),
+    ("r3k2r/pppq1ppp/2npbn2/4p3/2B1P3/2NPbN2/PPPQKPPP/R6R w kq - 0 2", (4, 6), (4, 5), 'Kxe3'),
+    ("r3k2r/pppq1ppp/2npbn2/2b1p3/2B1P3/2NPBN2/PPPQ1PPP/R3K2R w KQkq - 0 1", (4, 7), (6, 7), 'O-O'),
+    ("r3k2r/pppq1ppp/2npbn2/2b1p3/2B1P3/2NPBN2/PPPQ1PPP/R3K2R w KQkq - 0 1", (4, 7), (2, 7), 'O-O-O'),
+    ("r3k2r/pppq1ppp/2npbn2/2b1p3/2B1P3/2NPBN2/PPPQ1PPP/R3K2R w KQkq - 0 1", (4, 0), (6, 0), 'O-O'),
+    ("r3k2r/pppq1ppp/2npbn2/2b1p3/2B1P3/2NPBN2/PPPQ1PPP/R3K2R w KQkq - 0 1", (4, 0), (2, 0), 'O-O-O'),
+])
+def test_king_annotation(fen, start, end, expected):
     fp = FenParser(fen)
     fp.parse()
     

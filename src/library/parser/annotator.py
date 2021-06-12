@@ -80,9 +80,10 @@ def annotate_move(board, start, end, promotion_piece = None):
     if piece.name == 'King':
         rank_diff = abs(start[0] - end[0])
         if rank_diff == 2:
-            return 'O-O'
-        elif rank_diff == 3:
-            return 'O-O-O'
+            if start[0] > end[0]:
+                return 'O-O-O'
+            else:
+                return 'O-O'
     
     # checking for conflicting moves. More than 1 piece of that type, can go to that square
     identifier = get_piece_identifier(board, piece, start, end)
