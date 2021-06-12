@@ -45,7 +45,7 @@ def king_moves(board, king, old_moves, rank, file):
     enemy_colour = Colour.WHITE if king.colour == Colour.BLACK else Colour.BLACK
     enemy_pieces = board.filter_piece_list(colour_filter=enemy_colour)
     for move in old_moves:
-        threat = is_threatened(board, king.colour, rank, move[0], move[1])
+        threat = is_threatened(board, king.colour, move[0], move[1])
         if threat is False:
             available_moves.add(move)
     
@@ -57,10 +57,54 @@ def king_moves(board, king, old_moves, rank, file):
         if rank_diff <= 1 and file_diff <= 1:
             available_moves.remove(move)
     
+    if king.has_moved is False:
+        if is_threatened(board, king.colour, rank, file) is False:
+            if king.colour == Colour.WHITE:
+                # rank: 7
+                print('white king')
+                kingside = can_castle(board, king.colour, file, [5, 6], 7)
+                if kingside:
+                    available_moves.add((7, 6))
+                print(f'can castle kingside: {kingside}')
+                queenside = can_castle(board, king.colour, file, [1, 2, 3], 7)
+                if queenside:
+                    available_moves.add((7, 2))
+                print(f'can castle queenside: {queenside}')
+            else:
+                # rank: 0
+                print('black king')
+                kingside = can_castle(board, king.colour, file, [5, 6], 0)
+                if kingside:
+                    available_moves.add((0, 6))
+                print(f'can castle kingside: {kingside}')
+                queenside = can_castle(board, king.colour, file, [1, 2, 3], 0)
+                if queenside:
+                    available_moves.add((0, 2))
+                print(f'can castle queenside: {queenside}')
+    
     return available_moves
 
+def can_castle(board, colour, file, rank_check, rook_rank):
+    print(f'can_castle: {file}, {rank_check}, {rook_rank}')
+    rook = board.get_piece(rook_rank, file)
+    if rook is None:
+        return False
+    if rook.has_moved is True:
+        return False
+    
+    for rank in rank_check:
+        piece = board.get_piece(rank, file)
+        print(f'{rank}, {file} : {piece}')
+        if piece is not None:
+            print('piece: return false')
+            return False
+        if is_threatened(board, colour, rank, file) is True:
+            print('is_threatened: return false')
+            return False
+    return True
+
 # returns True if rank, file can be captured by opponent. False otherwise
-def is_threatened(board, colour, start_rank, rank, file):
+def is_threatened(board, colour, rank, file):
     enemy_colour = Colour.WHITE if colour == Colour.BLACK else Colour.BLACK
     enemies = board.filter_piece_list(colour_filter=enemy_colour)
     for enemy in enemies:
