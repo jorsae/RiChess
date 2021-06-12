@@ -53,6 +53,13 @@ class Board():
             if end[1] == promotion_file:
                 promotion_piece = gh.get_pawn_promotion(piece.colour)
                 promotion_piece.has_moved = True
+        
+        # check for en passant
+        advance_file = -1 if (piece.colour == Colour.WHITE) else 1
+        ep_rank, ep_file = gh.get_en_passant(self, piece, start[0], start[1], advance_file)
+        if ep_rank is not None:
+            self.remove_list_piece(ep_rank, ep_file - advance_file)
+            self.board[ep_rank][ep_file - advance_file] = None
 
         if start is not None and end is not None:
             self.move_history.append(MoveHistory(start, end))
