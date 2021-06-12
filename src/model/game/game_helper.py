@@ -95,3 +95,38 @@ def get_en_passant(board, pawn, rank, file, advance_file):
                 elif rank == last_move.end[0] - 1:
                     return last_move.end[0], last_move.end[1] + advance_file
     return None, None
+
+def get_castle_moves(board, king, rank, file):
+    available_moves = set()
+    if king.has_moved is False:
+        if move_logic.is_threatened(board, king.colour, rank, file) is False:
+            if king.colour == Colour.WHITE:
+                kingside = can_castle(board, king.colour, file, [5, 6], 7)
+                if kingside:
+                    available_moves.add((6, 7))
+                queenside = can_castle(board, king.colour, file, [1, 2, 3], 7)
+                if queenside:
+                    available_moves.add((2, 7))
+            else:
+                kingside = can_castle(board, king.colour, file, [5, 6], 0)
+                if kingside:
+                    available_moves.add((6, 0))
+                queenside = can_castle(board, king.colour, file, [1, 2, 3], 0)
+                if queenside:
+                    available_moves.add((2, 0))
+    return available_moves
+
+def can_castle(board, colour, file, rank_check, rook_rank):
+    rook = board.get_piece(rook_rank, file)
+    if rook is None:
+        return False
+    if rook.has_moved is True:
+        return False
+    
+    for rank in rank_check:
+        piece = board.get_piece(rank, file)
+        if piece is not None:
+            return False
+        if move_logic.is_threatened(board, colour, rank, file) is True:
+            return False
+    return True

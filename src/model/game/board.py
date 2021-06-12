@@ -1,5 +1,3 @@
-from typing import Sequence
-
 from model.piece import Colour, BoardPiece
 import model.game.move_logic as move_logic
 import model.game.game_helper as gh
@@ -60,6 +58,29 @@ class Board():
         if ep_rank is not None:
             self.remove_list_piece(ep_rank, ep_file - advance_file)
             self.board[ep_rank][ep_file - advance_file] = None
+        
+        # check for castling
+        if piece.name == 'King':
+            diff = abs(start[0] - end[0])
+            # player castled, change location of the rook
+            if diff > 1:
+                print(f'castled: {end[0]=}')
+                if end[0] == 6:
+                    rook = self.get_piece(7, start[1])
+                    print(f'{start[1]=} | {rook=}')
+                    self.board[7][start[1]] = None
+                    self.board[5][start[1]] = rook
+                    castled_rook = list(filter(lambda p: p.rank == 7 and p.file == start[1], self.piece_list))[0]
+                    print(f'{castled_rook=}')
+                    castled_rook.rank = 5
+                else:
+                    rook = self.get_piece(0, start[1])
+                    print(f'{start[1]=} | {rook=}')
+                    self.board[0][start[1]] = None
+                    self.board[3][start[1]] = rook
+                    castled_rook = list(filter(lambda p: p.rank == 0 and p.file == start[1], self.piece_list))[0]
+                    print(f'{castled_rook=}')
+                    castled_rook.rank = 3
 
         if start is not None and end is not None:
             self.move_history.append(MoveHistory(start, end))
