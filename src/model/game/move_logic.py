@@ -62,6 +62,9 @@ def king_moves(board, king, old_moves, rank, file):
 
     return available_moves
 
+def is_check(board, colour, rank, file):
+    return is_threatened(board, colour, rank, file)
+
 # returns True if rank, file can be captured by opponent. False otherwise
 def is_threatened(board, colour, rank, file):
     enemy_colour = Colour.WHITE if colour == Colour.BLACK else Colour.BLACK

@@ -36,6 +36,21 @@ class Board():
             return # TODO: raise exception
         
         available_moves = gh.get_available_moves(self, start[0], start[1])
+        for moves in available_moves:
+            print(f'{moves}')
+            self.board[start[0]][start[1]] = None
+            self.board[moves[0]][moves[1]] = piece
+            king = self.filter_piece_list(piece_filter='King', colour_filter=piece.colour)[0]
+            print(f'{king.piece.colour}: {king.rank}, {king.file}')
+            invalid_move = False
+            if move_logic.is_check(self, piece.colour, king.rank, king.file):
+                invalid_move = True
+                print('invalid move, in check') # TODO: remove from available_moves
+            self.board[start[0]][start[1]] = piece
+            self.board[moves[0]][moves[1]] = None
+            if invalid_move:
+                return
+
         can_move = gh.can_move_to(available_moves, end[0], end[1])
         if can_move is False:
             return # TODO: raise exception

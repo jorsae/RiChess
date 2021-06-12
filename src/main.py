@@ -43,7 +43,8 @@ def play_game(fen):
             print(chess_game.board)
             print(annotation)
 
-play_game("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+# play_game("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+play_game("rnb1kbnr/ppp1pppp/4q3/8/8/8/PPPPQPPP/RNB1KBNR w KQkq - 2 4")
 
 # fp = FenParser("r1b1kbnr/pppppppp/2n5/5K2/3q4/8/PPPPPPPP/RNBQ1BNR w kq - 0 1")
 # fp = FenParser("8/r1B2kBp/2q5/8/b6n/2B3B1/P1P1P1P1/RN1QKBNR w KQ - 11 27")
