@@ -17,6 +17,7 @@ from model.piece import Colour, BoardPiece
     ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (0, 6), (0, 5), None, 'a3'),
     ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", (0, 6), (0, 5), None, 'a3'),
     ("rnbqkbnr/ppp1p1pp/5p2/3p4/2PP4/4P3/PP3PPP/RNBQKBNR b KQkq - 0 3", (3, 3), (2, 4), None, 'dxc4'),
+    ("rnbqkbnr/pp2pppp/2p5/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3", (4, 3), (3, 2), None, 'exd6'),
     ("8/rPB2kBp/2q5/4p3/b6n/2B3B1/P1P1P3/RN1QKBNR w KQ - 11 27", (1, 1), (1, 0), Queen(Colour.WHITE), 'b8=Q'),
     ("8/rPB2kBp/2q5/4p3/b6n/2B3B1/P1P1P3/RN1QKBNR w KQ - 11 27", (1, 1), (1, 0), Rook(Colour.WHITE), 'b8=R'),
     ("8/rPB2kBp/2q5/4p3/b6n/2B3B1/P1P1P3/RN1QKBNR w KQ - 11 27", (1, 1), (1, 0), Bishop(Colour.WHITE), 'b8=B'),

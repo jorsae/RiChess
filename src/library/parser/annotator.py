@@ -69,6 +69,12 @@ def annotate_move(board, start, end, promotion_piece = None):
     promotion = ''
     if promotion_piece is not None:
         promotion = f'={promotion_piece.abbreviation}'
+    
+    advance_file = -1 if (piece.colour == Colour.WHITE) else 1
+    ep_rank, ep_file = gh.get_en_passant(board, piece, start[0], start[1], advance_file)
+    if ep_rank is not None:
+        chars = 'abcdefgh' # TODO: This is ugly
+        capture = f'{chars[start[0]]}x'
 
     # TODO: add annotation for castling
     
